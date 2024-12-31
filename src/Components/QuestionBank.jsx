@@ -2,11 +2,11 @@
 
 // Define the common response options
 const responseOptions = [
-    "1 - This does not describe me",
-    "2 - I am very seldom like this",
-    "3 - I am sometimes like this",
-    "4 - I am often like this",
-    "5 - This is me!",
+    "This does not describe me",
+    "I am very seldom like this",
+    "I am sometimes like this",
+    "I am often like this",
+    "This is me!",
 ];
 
 // Define the questions
