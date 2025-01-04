@@ -9,7 +9,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import Login from './Login';           // Your custom login/sign-up component
 import ProtectedRoute from './ProtectedRoute'; // Our wrapper
 
-// If you're using the same quiz code from before, you might have Score, question data, etc.
 import qBank from './Components/QuestionBank';
 import Score from './Components/Score';
 import './App.css';
@@ -18,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,             // Track logged-in user
+      user: null,
       questionBank: qBank,
       currentQuestion: 0,
       selectedOption: 0,
@@ -28,14 +27,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // Listen for auth state changes
     this.unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       this.setState({ user });
     });
   }
 
   componentWillUnmount() {
-    // Stop listening to auth state changes
     if (this.unsubscribeAuth) {
       this.unsubscribeAuth();
     }
@@ -86,8 +83,6 @@ class App extends Component {
     this.setState({ quizEnd: true });
   };
 
-  // You can separate the quiz logic into its own component (Quiz.jsx), 
-  // but here’s an inline approach for demonstration:
   renderQuiz() {
     const {
       questionBank,
@@ -163,22 +158,12 @@ class App extends Component {
 
     return (
       <Routes>
-        {/* 
-          Default route: if user tries "/", 
-          redirect to either /quiz if logged in, or /auth if not
-        */}
         <Route
           path="/"
           element={
             user ? <Navigate to="/quiz" replace /> : <Navigate to="/auth" replace />
           }
         />
-
-        {/* 
-          /auth route: Always show <Login />. 
-          If user is already logged in and they manually go to /auth, 
-          you might want to redirect them to /quiz. 
-        */}
         <Route
           path="/auth"
           element={
@@ -187,11 +172,6 @@ class App extends Component {
               : <Login />
           }
         />
-
-        {/* 
-          /quiz route: Protected. 
-          We wrap it with <ProtectedRoute> to redirect if no user 
-        */}
         <Route
           path="/quiz"
           element={

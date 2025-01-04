@@ -1,8 +1,10 @@
 /* App.css */
+
+/* General Layout */
 body {
-  background-color: #f7f9fc !important;
+  background-color: #f7f9fc;
   font-family: 'Inter', system-ui, sans-serif;
-  color: #213547 !important;
+  color: #213547;
   margin: 0;
   padding: 0;
   display: flex;
@@ -20,10 +22,11 @@ body {
   gap: 2rem;
 }
 
+/* Question Panel */
 .question-panel {
   flex: 3;
   padding: 2.5rem;
-  background-color: #ffffff !important;
+  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
@@ -32,27 +35,125 @@ body {
   color: #ff6600;
   font-weight: bold;
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin: 0; /* Remove extra space above */
+  padding: 0; /* Ensure no padding */
 }
 
 .question-body {
-  margin-bottom: 2rem;
+  margin-top: 1.5rem; /* Adjust spacing below the header */
   font-size: 1.2rem;
   line-height: 1.8;
 }
 
-.submit-exam {
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.option-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.option-card.selected {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+.option-card:hover {
+  background-color: #e9f5ff;
+  border-color: #007bff;
+}
+
+/* Submit Button */
+button.btn-primary {
   margin-top: 2rem;
   padding: 1rem 1.5rem;
-  background-color: #007bff !important;
-  color: #fff !important;
-  border: none !important;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
   border-radius: 8px;
   font-size: 1.1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.submit-exam:hover {
-  background-color: #0056b3 !important;
+button.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Navigation Panel */
+.navigation-panel {
+  flex: 1.2;
+  padding: 2rem;
+  background-color: #f2f5fc;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.navigation-panel h4 {
+  font-size: 1.5rem;
+  color: #213547;
+  font-weight: bold;
+  margin-bottom: 1rem; /* Adjust spacing below header */
+}
+
+.nav-button {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.nav-button button {
+  width: 100%;
+  height: 50px; /* Slightly larger for better UI */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  color: #555;
+  border-radius: 8px; /* Match other buttons */
+  font-size: 1rem; /* Larger for readability */
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-button button.active {
+  background-color: #ff6600;
+  color: #fff;
+  border-color: #ff6600;
+}
+
+.nav-button button:hover {
+  background-color: #ff8555;
+  color: #fff;
+}
+
+/* Submit Exam Button */
+button.submit-exam {
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+button.submit-exam:hover {
+  background-color: #218838;
 }
