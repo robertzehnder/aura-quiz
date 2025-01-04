@@ -1,9 +1,8 @@
 /* App.css */
-
-/* General Layout */
 body {
-  background-color: #f7f9fc;
+  background-color: #f7f9fc !important;
   font-family: 'Inter', system-ui, sans-serif;
+  color: #213547 !important;
   margin: 0;
   padding: 0;
   display: flex;
@@ -16,16 +15,15 @@ body {
 .app-container {
   display: flex;
   justify-content: space-between;
-  width: 95%; /* Expanded width for a larger layout */
-  max-width: 1600px; /* Limit for large screens */
-  gap: 2rem; /* Maintain spacing between panels */
+  width: 95%;
+  max-width: 1600px;
+  gap: 2rem;
 }
 
-/* Question Panel */
 .question-panel {
-  flex: 3; /* Occupies a large portion of the space */
+  flex: 3;
   padding: 2.5rem;
-  background-color: #ffffff;
+  background-color: #ffffff !important;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
@@ -43,85 +41,12 @@ body {
   line-height: 1.8;
 }
 
-.options-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.option-card {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  cursor: pointer;
-  font-size: 1.1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.option-card.selected {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: #ffffff;
-}
-
-.option-card:hover {
-  background-color: #e9f5ff;
-  border-color: #007bff;
-}
-
-/* Navigation Panel */
-.navigation-panel {
-  flex: 1.2; /* Slightly narrower than the question panel */
-  padding: 2rem;
-  background-color: #f2f5fc;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-/* Navigation Buttons */
-.nav-button {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Ensure 7 buttons per row */
-  gap: 0.8rem; /* Slightly closer together */
-  margin-top: 1.5rem;
-}
-
-.nav-button button {
-  width: 100%;
-  height: 45px; /* Slightly taller for better usability */
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.nav-button button.active {
-  background-color: #ff6600;
-  color: #fff;
-  border-color: #ff6600;
-}
-
-.nav-button button:hover {
-  background-color: #ff8555;
-  color: #fff;
-}
-
-/* Submit Button Styling */
 .submit-exam {
   margin-top: 2rem;
   padding: 1rem 1.5rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+  background-color: #007bff !important;
+  color: #fff !important;
+  border: none !important;
   border-radius: 8px;
   font-size: 1.1rem;
   cursor: pointer;
@@ -129,26 +54,5 @@ body {
 }
 
 .submit-exam:hover {
-  background-color: #0056b3;
-}
-
-/* Utility Classes */
-.text-center {
-  text-align: center;
-}
-
-.mt-1 {
-  margin-top: 1rem;
-}
-
-.mt-2 {
-  margin-top: 2rem;
-}
-
-.mb-1 {
-  margin-bottom: 1rem;
-}
-
-.mb-2 {
-  margin-bottom: 2rem;
+  background-color: #0056b3 !important;
 }
