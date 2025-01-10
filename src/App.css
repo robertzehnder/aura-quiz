@@ -1,8 +1,13 @@
 /* App.css */
 
 /* General Layout */
+/* General Layout */
 body {
-  background-color: #f7f9fc;
+  background-color: #f7f9fc; /* Optional fallback */
+  background-image: url('/blurred-aura-image.png'); /* Replace with the correct path */
+  background-size: cover; /* Ensures the image covers the entire viewport */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
   font-family: 'Inter', system-ui, sans-serif;
   color: #213547;
   margin: 0;
@@ -13,6 +18,7 @@ body {
   min-height: 100vh;
   padding: 2rem 0;
 }
+
 
 .app-container {
   display: flex;
