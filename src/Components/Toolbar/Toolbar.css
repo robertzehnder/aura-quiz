@@ -1,0 +1,20 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Toolbar links */
+.toolbar a {
+  text-decoration: none;
+  color: #213547;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.toolbar .nav-links a {
+  margin-left: 15px;
+}

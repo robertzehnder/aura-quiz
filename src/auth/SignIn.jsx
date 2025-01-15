@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebaseConfig';
-import './AuthForm.css'; // Ensure the CSS file is imported
+import { auth } from '../firebaseConfig';
+import './AuthForm.css';
 
 export default function SignIn({ onSwitchToSignUp, onSignIn }) {
   const [email, setEmail] = useState('');
@@ -11,9 +11,7 @@ export default function SignIn({ onSwitchToSignUp, onSignIn }) {
     e.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      if (onSignIn) {
-        onSignIn(userCredential.user); // Call the onSignIn callback
-      }
+      onSignIn?.(userCredential.user);
     } catch (err) {
       alert(`Error signing in: ${err.message}`);
     }
@@ -44,11 +42,7 @@ export default function SignIn({ onSwitchToSignUp, onSignIn }) {
       <button type="submit" className="primary-btn">Sign In</button>
       <p>
         Don’t have an account?{' '}
-        <button
-          type="button"
-          className="link-btn"
-          onClick={onSwitchToSignUp}
-        >
+        <button type="button" className="link-btn" onClick={onSwitchToSignUp}>
           Sign Up
         </button>
       </p>

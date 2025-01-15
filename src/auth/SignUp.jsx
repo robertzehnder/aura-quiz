@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from './firebaseConfig';
-import './AuthForm.css'; // Ensure the CSS file is imported
+import { auth } from '../firebaseConfig';
+import './AuthForm.css';
 
 export default function SignUp({ onSwitchToSignIn, onSignIn }) {
   const [email, setEmail] = useState('');
@@ -13,9 +13,7 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName });
-      if (onSignIn) {
-        onSignIn(userCredential.user); // Call the onSignIn callback
-      }
+      onSignIn?.(userCredential.user);
     } catch (err) {
       alert(`Error signing up: ${err.message}`);
     }
@@ -56,11 +54,7 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
       <button type="submit" className="primary-btn">Sign Up</button>
       <p>
         Already have an account?{' '}
-        <button
-          type="button"
-          className="link-btn"
-          onClick={onSwitchToSignIn}
-        >
+        <button type="button" className="link-btn" onClick={onSwitchToSignIn}>
           Sign In
         </button>
       </p>

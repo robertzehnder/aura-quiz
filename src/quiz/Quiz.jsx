@@ -1,3 +1,4 @@
+// Quiz.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -21,7 +22,7 @@ export default function Quiz({ user, questionBank }) {
       if (docSnap.exists()) {
         const data = docSnap.data();
         setAnswers(data.answers || Array(questionBank.length).fill(null));
-        setSelectedOption(data.answers?.[0] || 0); // Set the first question's selected option
+        setSelectedOption(data.answers?.[0] || 0);
       } else {
         const emptyAnswers = Array(questionBank.length).fill(null);
         setAnswers(emptyAnswers);
@@ -58,7 +59,7 @@ export default function Quiz({ user, questionBank }) {
     }
 
     if (currentQuestion < questionBank.length - 1) {
-      setSelectedOption(answers[currentQuestion + 1] || 0); // Set the next question's selected option
+      setSelectedOption(answers[currentQuestion + 1] || 0);
       setCurrentQuestion(currentQuestion + 1);
     } else {
       handleQuizSubmit(updatedAnswers);
@@ -87,7 +88,7 @@ export default function Quiz({ user, questionBank }) {
       );
 
       console.log('Quiz Completed. Submitting final results.');
-      navigate('/results'); // Navigate to the results page
+      navigate('/results');
     } catch (error) {
       console.error('Error submitting quiz:', error.message);
     }
