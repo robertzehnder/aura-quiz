@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "./firebaseConfig";
@@ -11,6 +11,7 @@ import ResultsPage from "./results/ResultsPage";
 import Login from "./auth/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Modal from "./Components/Modal/Modal";
+import questionBank from "./Components/QuestionBank"; // Importing questionBank
 
 class App extends Component {
   constructor(props) {
@@ -43,9 +44,16 @@ class App extends Component {
 
   getBackgroundClass = () => {
     const location = window.location.pathname;
+
+    // Ensure the landing page background is retained when the modal is open
+    if (this.state.showLoginModal) {
+      return "default-background";
+    }
+
     if (location.startsWith("/quiz") || location.startsWith("/results")) {
       return "aura-background";
     }
+
     return "default-background";
   };
 
@@ -67,11 +75,7 @@ class App extends Component {
           />
           <Route
             path="/quiz"
-            element={
-              <ProtectedRoute user={user}>
-                <Quiz user={user} />
-              </ProtectedRoute>
-            }
+            element={<Quiz user={user} questionBank={questionBank} />}
           />
           <Route
             path="/results"

@@ -1,27 +1,27 @@
 :root {
-  --default-background-gradient: linear-gradient(to bottom, #e0f7fa, #e0f2f1);
-  --white-color: #ffffff;
-  --text-color: #213547;
+  --background-color: #ffffff; /* Set a simple white background */
+  --primary-color: #007bff;
+  --secondary-color: #213547;
+  --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background: var(--default-background-gradient);
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: var(--text-color);
-  display: block; /* Ensure block layout */
+  background-color: var(--background-color);
+  font-family: var(--font-family);
+  color: var(--secondary-color);
 }
 
 header {
-  width: 100%;
-  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: var(--white-color);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+  box-shadow: var(--card-shadow);
 }
 
 header h1 {
@@ -29,31 +29,18 @@ header h1 {
   font-size: 1.8rem;
 }
 
-header nav {
-  display: flex;
-  gap: 10px;
-}
-
 header nav a {
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--secondary-color);
   font-weight: bold;
 }
 
 .container {
-  background: var(--white-color);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  width: 90%;
-  max-width: 800px;
-  margin-top: 20px;
+  background: var(--background-color);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--border-radius);
+  margin: 20px auto;
   padding: 20px;
+  max-width: 800px;
   text-align: center;
-}
-
-.quiz-cards {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 20px;
 }

@@ -1,8 +1,13 @@
-import React from "react";
-import "./Modal.css"; // Ensure proper CSS is applied
+import React, { useEffect } from "react";
+import "./Modal.css";
 
 export default function Modal({ onClose, children }) {
-  console.log("Modal rendered with children:", children); // Debugging output
+  useEffect(() => {
+    document.body.classList.add("modal-active");
+    return () => {
+      document.body.classList.remove("modal-active");
+    };
+  }, []);
 
   return (
     <div className="modal-overlay" onClick={onClose}>

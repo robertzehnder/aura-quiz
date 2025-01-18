@@ -16,7 +16,7 @@ body {
   padding: 0 20px;
   overflow: hidden;
   width: 100%;
-  margin-top: 50px; /* Add spacing between toolbar and gallery */
+  margin-top: 100px; /* Add spacing between toolbar and gallery */
 }
 
 /* Individual gallery items */
@@ -39,8 +39,8 @@ body {
 
 /* Hover effect for gallery items */
 .gallery-item:hover {
-  flex: 2; /* Adjust this value to expand horizontally on hover */
-  max-width: 40%; /* Keep hover size proportional */
+  flex: 1.5; /* Reduce the expansion */
+  max-width: 30%; /* Adjust to 75% of the previous expansion */
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   z-index: 10;
 }
