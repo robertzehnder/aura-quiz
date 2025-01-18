@@ -1,92 +1,159 @@
-/* AuthForm.css */
-
-/* Center the modal content */
+/* General container for the authentication modal */
 .auth-container {
   width: 100%;
-  max-width: 450px; /* Maximum width for the auth container */
-  padding: 1.5rem; /* Adjusted padding for symmetry */
-  background: #ffffff; /* White background for the auth form */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  text-align: center; /* Center the content */
-  font-family: 'Inter', sans-serif; /* Modern, clean font */
+  max-width: 450px;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Header inside the auth container */
+/* Form header styling */
 .auth-container h1 {
-  font-size: 1.5rem; /* Balanced header size */
-  font-weight: 600; /* Slightly bold */
-  color: #213547; /* Dark text color */
-  margin-bottom: 1.5rem; /* Space below the header */
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #213547;
+  margin-bottom: 2rem;
 }
 
 /* Input field container */
 .input-container {
-  margin-bottom: 1.2rem; /* Space between input fields */
-  text-align: left; /* Align labels to the left */
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
 /* Labels for input fields */
 .input-container label {
-  display: block; /* Ensure labels appear on their own line */
-  font-size: 0.9rem; /* Small, readable label size */
-  font-weight: 500; /* Slightly bold for emphasis */
-  color: #555; /* Neutral gray text color */
-  margin-bottom: 0.5rem; /* Space between label and input */
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
 }
 
 /* Input fields */
-.input-container input {
-  width: 100%; /* Ensure input fields are the same width as the container */
-  max-width: 400px; /* Align inputs with the button width */
-  padding: 0.8rem; /* Comfortable padding for inputs */
-  border: 1px solid #ddd; /* Subtle border */
-  border-radius: 8px; /* Rounded input corners */
-  font-size: 0.9rem; /* Standard input font size */
-  font-family: 'Inter', sans-serif; /* Match font */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-  margin: 0 auto; /* Center the input field */
-  display: block; /* Block layout for consistent alignment */
-  box-sizing: border-box; /* Include padding and border in the width */
+.input-container input,
+.primary-btn {
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box; /* Ensure consistent sizing */
 }
 
-/* Focus state for inputs */
-.input-container input:focus {
-  border-color: #007bff; /* Highlight border on focus */
-  outline: none; /* Remove default focus outline */
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3); /* Subtle glow effect */
+.input-container input {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Invalid input field */
+input.invalid {
+  border: 1px solid #ff4d4d;
+  box-shadow: none;
+}
+
+/* Valid input field */
+input.valid {
+  border: 1px solid #4caf50;
+  box-shadow: none;
+}
+
+/* Feedback messages */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.success-message {
+  color: green;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
 
 /* Primary button styles */
 .primary-btn {
-  width: 100%; /* Ensure button matches the container's width */
-  max-width: 400px; /* Consistent width with input fields */
-  padding: 0.8rem; /* Standard button padding */
-  font-size: 1rem; /* Standard font size */
-  font-weight: 600; /* Bold text */
-  color: #ffffff; /* White text */
-  background-color: #007bff; /* Primary blue background */
-  border: none; /* No border */
-  border-radius: 8px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor for buttons */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
-  margin: 0 auto; /* Center the button */
-  display: block; /* Block layout */
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Hover state for primary buttons */
 .primary-btn:hover {
-  background-color: #0056b3; /* Darker blue */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  background-color: #0056b3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Links inside the form */
-.auth-container a {
-  color: #007bff; /* Blue link color */
-  text-decoration: none; /* Remove underline */
+/* Link styles */
+.link-btn {
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  margin-top: 1rem;
 }
 
-/* Hover state for links */
-.auth-container a:hover {
-  text-decoration: underline; /* Add underline on hover */
+.link-btn:hover {
+  text-decoration: none;
+}
+
+/* Disabled primary button */
+.primary-btn:disabled {
+  background-color: #d6d6d6;
+  cursor: not-allowed;
+}
+
+/* General modal styles */
+.modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem 1.5rem;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+}
+
+/* Close button for modal */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Additional spacing */
+.spacing {
+  margin-top: 1.5rem;
 }
