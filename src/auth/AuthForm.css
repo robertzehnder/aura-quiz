@@ -1,105 +1,92 @@
 /* AuthForm.css */
 
-/* Full page layout */
-body.auth-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-image: url('/blurred-aura-image.png'); /* Path to the background image */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 0;
-}
-
-/* Auth container for form */
+/* Center the modal content */
 .auth-container {
   width: 100%;
-  max-width: 450px; /* Balanced width */
-  padding: 3rem 2rem; /* Comfortable padding */
-  background: #fff; /* White background */
-  border-radius: 16px; /* Rounded corners */
+  max-width: 450px; /* Maximum width for the auth container */
+  padding: 1.5rem; /* Adjusted padding for symmetry */
+  background: #ffffff; /* White background for the auth form */
+  border-radius: 12px; /* Rounded corners */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  text-align: center;
-  font-family: 'Inter', sans-serif; /* Modern font */
+  text-align: center; /* Center the content */
+  font-family: 'Inter', sans-serif; /* Modern, clean font */
 }
 
 /* Header inside the auth container */
-.auth-container h2 {
+.auth-container h1 {
   font-size: 1.5rem; /* Balanced header size */
-  font-weight: 600;
-  color: #213547; /* Dark text */
-  margin-bottom: 2rem; /* Spacing below */
+  font-weight: 600; /* Slightly bold */
+  color: #213547; /* Dark text color */
+  margin-bottom: 1.5rem; /* Space below the header */
 }
 
-/* Input field styles */
+/* Input field container */
 .input-container {
-  margin-bottom: 1.5rem; /* Spacing between fields */
-  text-align: left;
+  margin-bottom: 1.2rem; /* Space between input fields */
+  text-align: left; /* Align labels to the left */
 }
 
+/* Labels for input fields */
 .input-container label {
-  display: block;
-  font-size: 0.9rem; /* Readable size */
-  font-weight: 500;
-  color: #555;
+  display: block; /* Ensure labels appear on their own line */
+  font-size: 0.9rem; /* Small, readable label size */
+  font-weight: 500; /* Slightly bold for emphasis */
+  color: #555; /* Neutral gray text color */
   margin-bottom: 0.5rem; /* Space between label and input */
 }
 
+/* Input fields */
 .input-container input {
-  width: 90%; /* Slightly smaller fields */
-  max-width: 500px; /* Cap the field width */
-  padding: 0.8rem 1rem; /* Comfortable padding */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 0.9rem; /* Smaller font size */
-  font-family: 'Inter', sans-serif;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* Ensure input fields are the same width as the container */
+  max-width: 400px; /* Align inputs with the button width */
+  padding: 0.8rem; /* Comfortable padding for inputs */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px; /* Rounded input corners */
+  font-size: 0.9rem; /* Standard input font size */
+  font-family: 'Inter', sans-serif; /* Match font */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  margin: 0 auto; /* Center the input field */
+  display: block; /* Block layout for consistent alignment */
+  box-sizing: border-box; /* Include padding and border in the width */
 }
 
+/* Focus state for inputs */
 .input-container input:focus {
-  border-color: #007bff; /* Blue border on focus */
-  outline: none;
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3); /* Subtle glow */
+  border-color: #007bff; /* Highlight border on focus */
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3); /* Subtle glow effect */
 }
 
-/* Primary button (e.g., Sign In, Sign Up) */
+/* Primary button styles */
 .primary-btn {
-  width: 90%; /* Align with input fields */
-  max-width: 500px; /* Cap button width */
+  width: 100%; /* Ensure button matches the container's width */
+  max-width: 400px; /* Consistent width with input fields */
   padding: 0.8rem; /* Standard button padding */
   font-size: 1rem; /* Standard font size */
-  font-weight: 600;
-  color: #fff; /* White text */
-  background-color: #007bff; /* Blue background */
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: 600; /* Bold text */
+  color: #ffffff; /* White text */
+  background-color: #007bff; /* Primary blue background */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor for buttons */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  margin: 0 auto; /* Center the button */
+  display: block; /* Block layout */
 }
 
+/* Hover state for primary buttons */
 .primary-btn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle hover shadow */
+  background-color: #0056b3; /* Darker blue */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
 }
 
-/* Secondary button (e.g., Continue as Guest) */
-.secondary-btn {
-  width: 90%; /* Align with input fields */
-  max-width: 500px; /* Cap button width */
-  padding: 0.8rem; /* Consistent padding */
-  font-size: 1rem; /* Standard font size */
-  font-weight: 600;
-  color: #007bff; /* Blue text */
-  background-color: #f8faff; /* Light blue background */
-  border: 1px solid #007bff; /* Blue border */
-  border-radius: 8px;
-  margin-top: 1rem; /* Closer to the primary button */
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+/* Links inside the form */
+.auth-container a {
+  color: #007bff; /* Blue link color */
+  text-decoration: none; /* Remove underline */
 }
 
-.secondary-btn:hover {
-  background-color: #e7f1ff; /* Slightly darker blue on hover */
+/* Hover state for links */
+.auth-container a:hover {
+  text-decoration: underline; /* Add underline on hover */
 }
