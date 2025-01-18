@@ -1,31 +1,46 @@
-/* Index.css */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: #213547;
-  background-color: #f7f9fc;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
+  --background-color: #ffffff; /* Set a simple white background */
+  --primary-color: #007bff;
+  --secondary-color: #213547;
+  --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 body {
   margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  font-family: var(--font-family);
+  color: var(--secondary-color);
+}
+
+header {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--background-color);
+  box-shadow: var(--card-shadow);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+header nav a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.container {
+  background: var(--background-color);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--border-radius);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  text-align: center;
 }

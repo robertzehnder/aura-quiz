@@ -1,15 +1,8 @@
-/* App.css */
-
-/* General Layout */
-/* General Layout */
+/* App-wide layout and container styles */
 body {
-  background-color: #f7f9fc; /* Optional fallback */
-  background-image: url('/blurred-aura-image.png'); /* Replace with the correct path */
-  background-size: cover; /* Ensures the image covers the entire viewport */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-color: #f7f9fc; /* Light background color for a clean look */
   font-family: 'Inter', system-ui, sans-serif;
-  color: #213547;
+  color: #213547; /* Primary text color */
   margin: 0;
   padding: 0;
   display: flex;
@@ -17,149 +10,116 @@ body {
   align-items: flex-start;
   min-height: 100vh;
   padding: 2rem 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling issues */
 }
-
 
 .app-container {
   display: flex;
-  justify-content: space-between;
-  width: 95%;
-  max-width: 1600px;
-  gap: 2rem;
-}
-
-/* Question Panel */
-.question-panel {
-  flex: 3;
-  padding: 2.5rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.question-header {
-  color: #ff6600;
-  font-weight: bold;
-  font-size: 2rem;
-  margin: 0; /* Remove extra space above */
-  padding: 0; /* Ensure no padding */
-}
-
-.question-body {
-  margin-top: 1.5rem; /* Adjust spacing below the header */
-  font-size: 1.2rem;
-  line-height: 1.8;
-}
-
-.options-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.option-card {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  cursor: pointer;
-  font-size: 1.1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.option-card.selected {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: #ffffff;
-}
-
-.option-card:hover {
-  background-color: #e9f5ff;
-  border-color: #007bff;
-}
-
-/* Submit Button */
-button.btn-primary {
-  margin-top: 2rem;
-  padding: 1rem 1.5rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-/* Navigation Panel */
-.navigation-panel {
-  flex: 1.2;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100vh;
   padding: 2rem;
-  background-color: #f2f5fc;
+  box-sizing: border-box;
+}
+
+/* Header styles */
+header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure header stays above content */
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #213547;
+}
+
+header nav {
+  display: flex;
+  gap: 10px;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #213547;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+header nav a:hover {
+  color: #007bff; /* Add hover effect for navigation links */
+}
+
+/* Main content container */
+.container {
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
+  overflow: hidden; /* Prevent layout shifts */
+}
+
+/* Quiz card layout for landing page */
+.quiz-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.quiz-card {
+  flex: 1 1 calc(33.333% - 20px); /* Responsive layout */
+  max-width: calc(33.333% - 20px);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-card h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #213547;
+}
+
+.quiz-card p {
+  margin-top: 10px;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Utility classes */
+.text-center {
   text-align: center;
 }
 
-.navigation-panel h4 {
-  font-size: 1.5rem;
-  color: #213547;
-  font-weight: bold;
-  margin-bottom: 1rem; /* Adjust spacing below header */
+.margin-top {
+  margin-top: 20px;
 }
 
-.nav-button {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.8rem;
-  margin-top: 1.5rem;
-}
-
-.nav-button button {
-  width: 100%;
-  height: 50px; /* Slightly larger for better UI */
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  color: #555;
-  border-radius: 8px; /* Match other buttons */
-  font-size: 1rem; /* Larger for readability */
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.nav-button button.active {
-  background-color: #ff6600;
-  color: #fff;
-  border-color: #ff6600;
-}
-
-.nav-button button:hover {
-  background-color: #ff8555;
-  color: #fff;
-}
-
-/* Submit Exam Button */
-button.submit-exam {
-  margin-top: 2rem;
-  padding: 1rem 1.5rem;
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  cursor: pointer;
-}
-
-button.submit-exam:hover {
-  background-color: #218838;
+/* Modal-specific styles */
+body.modal-active {
+  overflow: hidden; /* Disable scrolling when modal is active */
 }
