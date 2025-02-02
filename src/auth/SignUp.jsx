@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
-import { auth } from '../firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore'; // Import getDoc
+import { auth, db } from '../firebaseConfig';
 import './AuthForm.css';
-
-const db = getFirestore();
 
 export default function SignUp({ onSwitchToSignIn, onSignIn }) {
   const [email, setEmail] = useState('');
@@ -13,31 +11,28 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
   const [username, setUsername] = useState('');
   const [errors, setErrors] = useState({});
   const [valid, setValid] = useState({});
-  const [successMessage, setSuccessMessage] = useState({}); // Tracks success messages
 
-  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
-  const validateFullName = (name) => name.trim().length > 0;
+  const validateFullName = (name) => {
+    return name.trim().length > 0;
+  };
 
   const validateUsername = async (username) => {
     if (username.trim().length === 0) return false;
-    const usersQuery = query(
-      collection(db, 'users'),
-      where('username', '==', username)
-    );
-    const querySnapshot = await getDocs(usersQuery);
-    if (querySnapshot.empty) {
-      setSuccessMessage((prev) => ({ ...prev, username: 'Username available' }));
-      return true;
-    } else {
-      setSuccessMessage((prev) => ({ ...prev, username: '' }));
-      return false;
-    }
+    const usernameDoc = doc(db, 'users', username);
+    const docSnapshot = await getDoc(usernameDoc);
+    return !docSnapshot.exists();
   };
 
-  const validatePassword = (password) => password.length >= 6;
+  const validatePassword = (password) => {
+    return password.length >= 6; // Add more criteria if needed
+  };
 
-  const handleInputBlur = async (field, value) => {
+  const handleInputChange = async (field, value) => {
     let isValid = false;
     let error = '';
 
@@ -57,6 +52,11 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
 
     setValid((prev) => ({ ...prev, [field]: isValid }));
     setErrors((prev) => ({ ...prev, [field]: error }));
+
+    if (field === 'email') setEmail(value);
+    else if (field === 'displayName') setDisplayName(value);
+    else if (field === 'username') setUsername(value);
+    else if (field === 'password') setPassword(value);
   };
 
   const handleSignUp = async (e) => {
@@ -64,15 +64,21 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName });
-      // Save username to Firestore
-      await addDoc(collection(db, 'users'), {
-        uid: userCredential.user.uid,
-        username,
+
+      // Add user profile to Firestore
+      const userData = {
+        name: displayName,
         email,
-        displayName,
-      });
+        username,
+        quizzes: [], // Initialize with an empty array for quizzes
+        createdAt: new Date(),
+      };
+
+      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
+
       onSignIn?.(userCredential.user);
     } catch (err) {
+      console.error('Error signing up:', err);
       alert(`Error signing up: ${err.message}`);
     }
   };
@@ -86,8 +92,7 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
           id="email"
           placeholder="example@email.com"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={(e) => handleInputBlur('email', e.target.value)}
+          onChange={(e) => handleInputChange('email', e.target.value)}
           className={valid.email === false ? 'invalid' : valid.email ? 'valid' : ''}
         />
         {errors.email && <small className="error-message">{errors.email}</small>}
@@ -99,8 +104,7 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
           id="displayName"
           placeholder="Enter your full name"
           value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
-          onBlur={(e) => handleInputBlur('displayName', e.target.value)}
+          onChange={(e) => handleInputChange('displayName', e.target.value)}
           className={valid.displayName === false ? 'invalid' : valid.displayName ? 'valid' : ''}
         />
         {errors.displayName && <small className="error-message">{errors.displayName}</small>}
@@ -112,14 +116,10 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
           id="username"
           placeholder="Enter your username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          onBlur={(e) => handleInputBlur('username', e.target.value)}
+          onChange={(e) => handleInputChange('username', e.target.value)}
           className={valid.username === false ? 'invalid' : valid.username ? 'valid' : ''}
         />
         {errors.username && <small className="error-message">{errors.username}</small>}
-        {successMessage.username && (
-          <small className="success-message">{successMessage.username}</small>
-        )}
       </div>
       <div className="input-container">
         <label htmlFor="password">Password</label>
@@ -128,8 +128,7 @@ export default function SignUp({ onSwitchToSignIn, onSignIn }) {
           id="password"
           placeholder="Enter your password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={(e) => handleInputBlur('password', e.target.value)}
+          onChange={(e) => handleInputChange('password', e.target.value)}
           className={valid.password === false ? 'invalid' : valid.password ? 'valid' : ''}
         />
         {errors.password && <small className="error-message">{errors.password}</small>}
