@@ -75,8 +75,8 @@ body {
   justify-content: center;
   align-items: stretch;
   overflow: hidden;
-  height: calc(100vh - 20% - 12%); /* Adjusted for new question section size */
-  max-height: calc(100vh - 20% - 12%); /* Prevents overflow */
+  height: calc(100vh - 20% - 10%); /* Adjusted for new question section size */
+  max-height: calc(100vh - 20% - 10%); /* Prevents overflow */
 }
 
 /* Answer Tiles */

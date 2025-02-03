@@ -12,8 +12,9 @@ import Login from "./auth/Login";
 
 import AuraHome from "./quiz/aura/AuraHome";
 import AuraQuiz from "./quiz/aura/AuraQuiz";
+import ResultsPage from "./quiz/aura/ResultsPage"; // ✅ Import ResultsPage
 
-import auraQuestionBank from "./quiz/aura/questionBank"; // Aura Quiz questions
+import auraQuestionBank from "./quiz/aura/QuestionBank"; // Aura Quiz questions
 
 class App extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class App extends Component {
     this.setState({ showLoginModal: false });
   };
 
-  /** ✅ Fix: Handle Answer Submission Without Auto-Advancing */
+  /** ✅ Handle Answer Submission */
   handleAnswer = (answerIndex) => {
     const { currentQuestionIndex, userAnswers } = this.state;
     console.log(`✅ Answer selected: ${answerIndex} for question ${currentQuestionIndex}`);
@@ -57,17 +58,17 @@ class App extends Component {
     });
   };
 
-  /** ✅ Fix: Navigation Handled Separately */
-  handleNextQuestion = () => {
-    const { currentQuestionIndex } = this.state;
+  /** ✅ Handle Next Question or Submit */
+  handleNextQuestion = (navigate) => {
+    const { currentQuestionIndex, userAnswers } = this.state;
 
     if (currentQuestionIndex < auraQuestionBank.length - 1) {
       this.setState((prevState) => ({
         currentQuestionIndex: prevState.currentQuestionIndex + 1,
       }));
     } else {
-      console.log("🎉 Quiz completed:", this.state.userAnswers);
-      // Handle quiz completion (e.g., save to Firebase)
+      console.log("🎉 Quiz completed:", userAnswers);
+      navigate("/quiz/aura/results", { state: { answers: userAnswers } }); // ✅ Navigate to ResultsPage
     }
   };
 
@@ -78,7 +79,7 @@ class App extends Component {
   };
 
   render() {
-    const { user, showLoginModal, currentQuestionIndex } = this.state;
+    const { user, showLoginModal, currentQuestionIndex, userAnswers } = this.state;
 
     return (
       <div>
@@ -102,11 +103,16 @@ class App extends Component {
                 user={user}
                 questionBank={auraQuestionBank}
                 currentQuestionIndex={currentQuestionIndex}
+                userAnswers={userAnswers}
                 onAnswer={this.handleAnswer}
                 onNext={this.handleNextQuestion}
                 onPrevious={this.handlePreviousQuestion}
               />
             }
+          />
+          <Route
+            path="/quiz/aura/results"
+            element={<ResultsPage />} // ✅ Add ResultsPage route
           />
           <Route
             path="/auth"

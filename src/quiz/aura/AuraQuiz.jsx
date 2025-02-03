@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import navigation
 import "./AuraQuiz.css";
-import auraQuestionBank from "./questionBank"; // Import question bank
+import auraQuestionBank from "./QuestionBank"; // Import question bank
 
 const responseOptions = [
   "This does not describe me",
@@ -13,6 +14,7 @@ const responseOptions = [
 const AuraQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  const navigate = useNavigate(); // Initialize navigation
 
   const currentQuestion = auraQuestionBank[currentQuestionIndex];
 
@@ -38,7 +40,7 @@ const AuraQuiz = () => {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
       console.log("🎉 Quiz completed:", selectedAnswers);
-      // Handle quiz submission (e.g., Firebase storage)
+      navigate("/quiz/aura/results", { state: { answers: selectedAnswers } }); // Navigate to results page with data
     }
   };
 
@@ -87,10 +89,9 @@ const AuraQuiz = () => {
           Previous
         </button>
         <button
-          disabled={currentQuestionIndex === auraQuestionBank.length - 1}
           onClick={handleNextQuestion}
         >
-          Next
+          {currentQuestionIndex === auraQuestionBank.length - 1 ? "Submit" : "Next"}
         </button>
       </div>
     </div>
