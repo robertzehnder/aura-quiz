@@ -1,0 +1,278 @@
+/* Reset box sizing globally */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Ensure body and html don't introduce extra height */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent any potential scrolling */
+  background-color: white !important; /* Ensure full white background */
+}
+
+/* Quiz Page Styling */
+.aura-quiz-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure full viewport height */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Question Section */
+.aura-question-section {
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1rem 0;
+  position: relative;
+}
+
+/* Progress Bar */
+.aura-progress-bar-container {
+  position: relative;
+  width: 50%;
+  height: 0.5rem;
+  background-color: #e9ecef;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.aura-progress-bar {
+  height: 100%;
+  width: 50%;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
+
+/* Centered Question Text */
+.aura-quiz-question {
+  font-size: 1.75rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure the answer section takes up remaining space dynamically */
+.aura-answer-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  overflow: hidden;
+  height: calc(100vh - 20% - 10%);
+  max-height: calc(100vh - 20% - 10%);
+  background: white !important; /* Ensure no blue background */
+}
+
+/* Answer Tiles */
+.aura-quiz-option {
+  flex: 1;
+  height: 97.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  background-color: white !important; /* Ensures no blue background */
+}
+
+/* Answer text inside the tiles */
+.answer-text {
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: inherit;
+  margin-top: 30px;
+}
+
+/* Add a button-style circle */
+.aura-quiz-option button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid currentColor;
+  background-color: currentColor; /* Retains base color */
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Add hover effect to expand the shadow */
+.aura-quiz-option button:hover::before {
+  width: 175%;  /* Expands by 25% */
+  height: 175%;
+  top: -37.5%;
+  left: -37.5%;
+  opacity: 0.5; /* Slightly stronger glow */
+  transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, opacity 0.3s ease;
+}
+
+/* Ensure it smoothly returns to normal when hover stops */
+.aura-quiz-option button::before {
+  content: "";
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  top: -20%;
+  left: -20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--button-border-color) 20%, rgba(255, 255, 255, 0) 80%);
+  opacity: 0.4;
+  transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, opacity 0.3s ease;
+}
+
+/* Reduce opacity of glow when not selected */
+.aura-quiz-option button:not(.selected)::before {
+  opacity: 0.2;
+}
+
+/* Ensure selected buttons maintain styling */
+.aura-quiz-option.selected button {
+  background-color: currentColor !important;
+  color: white;
+  border-color: currentColor !important;
+  box-shadow: 0 0 20px 8px currentColor; /* Stronger glow for selection */
+}
+
+/* Ensure checkmark remains white */
+.aura-quiz-option.selected button .checkmark {
+  display: block;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.aura-quiz-option:nth-child(1) {
+  --button-border-color: #d9534f;
+}
+.aura-quiz-option:nth-child(2) {
+  --button-border-color: #f0ad4e;
+}
+.aura-quiz-option:nth-child(3) {
+  --button-border-color: #6c757d;
+}
+.aura-quiz-option:nth-child(4) {
+  --button-border-color: #5bc0de;
+}
+.aura-quiz-option:nth-child(5) {
+  --button-border-color: #5cb85c;
+}
+
+/* Lighter colors when unselected, full colors when selected */
+.aura-quiz-option:nth-child(1) button {
+  background-color: #f5baba; /* Lighter red */
+  border-color: #d9534f;
+  box-shadow: 0 0 12px #d9534f;
+}
+
+.aura-quiz-option:nth-child(1).selected button {
+  background-color: #d9534f !important;
+}
+
+.aura-quiz-option:nth-child(2) button {
+  background-color: #f8db95; /* Lighter yellow */
+  border-color: #f0ad4e;
+  box-shadow: 0 0 12px #f0ad4e;
+}
+
+.aura-quiz-option:nth-child(2).selected button {
+  background-color: #f0ad4e !important;
+}
+
+.aura-quiz-option:nth-child(3) button {
+  background-color: #cfcfd1; /* Lighter gray */
+  border-color: #6c757d;
+  box-shadow: 0 0 12px #6c757d;
+}
+
+.aura-quiz-option:nth-child(3).selected button {
+  background-color: #6c757d !important;
+}
+
+.aura-quiz-option:nth-child(4) button {
+  background-color: #99d3f0; /* Lighter blue */
+  border-color: #5bc0de;
+  box-shadow: 0 0 12px #5bc0de;
+}
+
+.aura-quiz-option:nth-child(4).selected button {
+  background-color: #5bc0de !important;
+}
+
+.aura-quiz-option:nth-child(5) button {
+  background-color: #98e098; /* Lighter green */
+  border-color: #5cb85c;
+  box-shadow: 0 0 12px #5cb85c;
+}
+
+.aura-quiz-option:nth-child(5).selected button {
+  background-color: #5cb85c !important;
+}
+
+/* Navigation Toolbar */
+.aura-navigation-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8%;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-top: 1px solid #ddd;
+}
+
+/* Navigation Buttons */
+.aura-navigation-toolbar button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  min-width: 100px;
+}
+
+/* Previous Button */
+.aura-navigation-toolbar button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Next Button */
+.aura-navigation-toolbar button:last-child {
+  background-color: #007bff;
+  color: white;
+  min-width: 100px;
+}
+
+.aura-navigation-toolbar button:last-child:hover:not(:disabled) {
+  background-color: #0056b3;
+}

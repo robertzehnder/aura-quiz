@@ -4,25 +4,25 @@ import "./LandingPage.css";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  
+
   const quizzes = [
     {
       title: "Aura Quiz",
       description: "Discover your aura color.",
-      backgroundImage: "url('../../public/blurred-aura-image.png')", // Replace with actual image path
-      path: "/quiz", // Add the path for navigation
+      backgroundImage: "url('../../public/blurred-aura-image.png')", // Ensure this path exists in your project
+      path: "/aura/quiz", // Correct path for Aura Quiz
     },
     {
       title: "Big 5",
       description: "Uncover your personality traits.",
-      backgroundImage: "url('/path/to/big5-image.jpg')",
-      path: "/big5", // Placeholder path
+      backgroundImage: "url('/assets/big5-image.jpg')", // Placeholder path, update with actual image
+      path: "/big5", // Placeholder path for future quiz
     },
     {
       title: "Career Quiz",
       description: "Find your ideal career path.",
-      backgroundImage: "url('/path/to/career-image.jpg')",
-      path: "/career", // Placeholder path
+      backgroundImage: "url('/assets/career-image.jpg')", // Placeholder path, update with actual image
+      path: "/career", // Placeholder path for future quiz
     },
   ];
 

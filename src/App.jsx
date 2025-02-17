@@ -6,12 +6,15 @@ import { auth } from "./firebaseConfig";
 import Toolbar from "./Components/Toolbar/Toolbar";
 import LandingPage from "./landing/LandingPage";
 import ProfilePage from "./profile/ProfilePage";
-import Quiz from "./quiz/Quiz";
-import ResultsPage from "./results/ResultsPage";
-import Login from "./auth/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Modal from "./Components/Modal/Modal";
-import questionBank from "./Components/QuestionBank"; // Importing questionBank
+import Login from "./auth/Login";
+
+import AuraHome from "./quiz/aura/AuraHome";
+import AuraQuiz from "./quiz/aura/AuraQuiz";
+import ResultsPage from "./quiz/aura/ResultsPage"; // ✅ Import ResultsPage
+
+import auraQuestionBank from "./quiz/aura/QuestionBank"; // Aura Quiz questions
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +22,8 @@ class App extends Component {
     this.state = {
       user: null,
       showLoginModal: false,
+      currentQuestionIndex: 0,
+      userAnswers: {}, // Store answers
     };
   }
 
@@ -42,26 +47,42 @@ class App extends Component {
     this.setState({ showLoginModal: false });
   };
 
-  getBackgroundClass = () => {
-    const location = window.location.pathname;
+  /** ✅ Handle Answer Submission */
+  handleAnswer = (answerIndex) => {
+    const { currentQuestionIndex, userAnswers } = this.state;
+    console.log(`✅ Answer selected: ${answerIndex} for question ${currentQuestionIndex}`);
 
-    // Ensure the landing page background is retained when the modal is open
-    if (this.state.showLoginModal) {
-      return "default-background";
+    // Store the answer but do NOT move to the next question automatically
+    this.setState({
+      userAnswers: { ...userAnswers, [currentQuestionIndex]: answerIndex },
+    });
+  };
+
+  /** ✅ Handle Next Question or Submit */
+  handleNextQuestion = (navigate) => {
+    const { currentQuestionIndex, userAnswers } = this.state;
+
+    if (currentQuestionIndex < auraQuestionBank.length - 1) {
+      this.setState((prevState) => ({
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+      }));
+    } else {
+      console.log("🎉 Quiz completed:", userAnswers);
+      navigate("/quiz/aura/results", { state: { answers: userAnswers } }); // ✅ Navigate to ResultsPage
     }
+  };
 
-    if (location.startsWith("/quiz") || location.startsWith("/results")) {
-      return "aura-background";
-    }
-
-    return "default-background";
+  handlePreviousQuestion = () => {
+    this.setState((prevState) => ({
+      currentQuestionIndex: Math.max(prevState.currentQuestionIndex - 1, 0),
+    }));
   };
 
   render() {
-    const { user, showLoginModal } = this.state;
+    const { user, showLoginModal, currentQuestionIndex, userAnswers } = this.state;
 
     return (
-      <div className={this.getBackgroundClass()}>
+      <div>
         <Toolbar user={user} openLoginModal={this.openLoginModal} />
         <Routes>
           <Route path="/" element={<LandingPage user={user} />} />
@@ -73,17 +94,25 @@ class App extends Component {
               </ProtectedRoute>
             }
           />
+          {/* Aura Quiz Routes */}
+          <Route path="/aura" element={<AuraHome />} />
           <Route
-            path="/quiz"
-            element={<Quiz user={user} questionBank={questionBank} />}
+            path="/aura/quiz"
+            element={
+              <AuraQuiz
+                user={user}
+                questionBank={auraQuestionBank}
+                currentQuestionIndex={currentQuestionIndex}
+                userAnswers={userAnswers}
+                onAnswer={this.handleAnswer}
+                onNext={this.handleNextQuestion}
+                onPrevious={this.handlePreviousQuestion}
+              />
+            }
           />
           <Route
-            path="/results"
-            element={
-              <ProtectedRoute user={user}>
-                <ResultsPage user={user} />
-              </ProtectedRoute>
-            }
+            path="/quiz/aura/results"
+            element={<ResultsPage />} // ✅ Add ResultsPage route
           />
           <Route
             path="/auth"
