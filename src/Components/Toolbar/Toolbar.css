@@ -1,20 +1,149 @@
+/* ═══════════════════════════════════════════════════
+   TOOLBAR — Glassmorphism Navigation
+   ═══════════════════════════════════════════════════ */
+
 .toolbar {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 1200px;
+  height: 56px;
+  z-index: 100;
+  border-radius: 20px;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.toolbar:hover {
+  box-shadow: 0 8px 32px rgba(200, 162, 255, 0.15);
+}
+
+.toolbar-inner {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 20px;
 }
 
-/* Toolbar links */
-.toolbar a {
-  text-decoration: none;
-  color: #213547;
-  font-weight: bold;
-  font-size: 1.5rem;
+/* ── Brand ──────────────────────────────────────── */
+
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.3s var(--ease-bounce);
 }
 
-.toolbar .nav-links a {
-  margin-left: 15px;
+.toolbar-brand:hover {
+  transform: scale(1.03);
+}
+
+.brand-icon {
+  font-size: 1.4rem;
+  animation: iconSpin 8s linear infinite;
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ── Navigation ─────────────────────────────────── */
+
+.toolbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Nav Pills ──────────────────────────────────── */
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.nav-pill:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-pill-glow {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nav-pill-glow:hover {
+  background: linear-gradient(135deg, rgba(255, 188, 217, 0.2), rgba(168, 162, 255, 0.2));
+  border-color: rgba(255, 188, 217, 0.4);
+  box-shadow: 0 0 20px rgba(200, 162, 255, 0.15);
+}
+
+.nav-pill-ghost {
+  opacity: 0.6;
+}
+
+.nav-pill-ghost:hover {
+  opacity: 1;
+}
+
+/* ── User Avatar ────────────────────────────────── */
+
+.user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cotton-candy), var(--lilac));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* ── Animations ─────────────────────────────────── */
+
+@keyframes iconSpin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ── Responsive ─────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .toolbar {
+    width: calc(100% - 16px);
+    top: 8px;
+  }
+
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .nav-pill {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }

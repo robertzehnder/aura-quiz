@@ -1,24 +1,22 @@
-import React, { useEffect } from "react";
-import "./Modal.css";
+import { useEffect } from 'react';
+import './Modal.css';
 
 export default function Modal({ onClose, children }) {
   useEffect(() => {
-    document.body.classList.add("modal-active");
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.classList.remove("modal-active");
+      document.body.style.overflow = '';
     };
   }, []);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className="modal-content"
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent closing when clicking inside the modal
-        }}
+        className="modal-content glass"
+        onClick={(e) => e.stopPropagation()}
       >
-        <button className="close-modal" onClick={onClose}>
-          &times;
+        <button className="modal-close" onClick={onClose}>
+          ×
         </button>
         {children}
       </div>

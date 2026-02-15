@@ -1,138 +1,82 @@
-/* App-wide layout and container styles */
-body {
-  background-color: #f7f9fc; /* Light background color for a clean look */
-  font-family: 'Inter', system-ui, sans-serif;
-  color: #213547; /* Primary text color */
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+/* ═══════════════════════════════════════════════════
+   APP LAYOUT
+   ═══════════════════════════════════════════════════ */
+
+.app {
   min-height: 100vh;
-  padding: 2rem 0;
-  overflow-x: hidden; /* Prevent horizontal scrolling issues */
+  position: relative;
 }
 
-.app-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
+.main-content {
+  padding-top: var(--toolbar-height);
   min-height: 100vh;
-  padding: 2rem;
-  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
-/* Header styles */
-header {
-  width: 100%;
-  max-width: 1200px;
+/* ── Loading Screen ─────────────────────────────── */
+
+.loading-screen {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Ensure header stays above content */
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: #213547;
-}
-
-header nav {
-  display: flex;
-  gap: 10px;
-}
-
-header nav a {
-  text-decoration: none;
-  color: #213547;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-header nav a:hover {
-  color: #007bff; /* Add hover effect for navigation links */
-}
-
-/* Main content container */
-.container {
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  width: 90%;
-  max-width: 800px;
-  margin-top: 20px;
-  padding: 20px;
-  text-align: center;
-  overflow: hidden; /* Prevent layout shifts */
-}
-
-/* Quiz card layout for landing page */
-.quiz-cards {
-  display: flex;
-  gap: 20px;
   justify-content: center;
-  margin-top: 20px;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  min-height: 100vh;
+  position: relative;
 }
 
-.quiz-card {
-  flex: 1 1 calc(33.333% - 20px); /* Responsive layout */
-  max-width: calc(33.333% - 20px);
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.quiz-card:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.quiz-card h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #213547;
-}
-
-.quiz-card p {
-  margin-top: 10px;
-  color: #666;
-  font-size: 1rem;
-}
-
-/* Utility classes */
-.text-center {
-  text-align: center;
-}
-
-.margin-top {
-  margin-top: 20px;
-}
-
-/* Modal-specific styles */
-body.modal-active {
-  overflow: hidden; /* Disable scrolling when modal is active */
-}
-
-.toolbar {
-  width: 100%; /* Ensures the toolbar spans the entire width */
-  position: sticky; /* Keeps it at the top while scrolling */
-  top: 0; /* Sticks to the very top */
-  z-index: 1000; /* Keeps it above other elements */
-  background-color: white; /* White background for the toolbar */
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1); /* Subtle shading */
-  padding: 0 20px; /* Adds horizontal padding without constraining width */
+.loading-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 24px;
+  z-index: 1;
+}
+
+.loading-orb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--cotton-candy),
+    var(--lavender-dream),
+    var(--baby-blue),
+    var(--mint)
+  );
+  background-size: 300% 300%;
+  animation: orbPulse 3s ease-in-out infinite, orbGlow 3s ease-in-out infinite;
+  box-shadow:
+    0 0 40px rgba(255, 188, 217, 0.4),
+    0 0 80px rgba(200, 162, 255, 0.2);
+}
+
+.loading-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); background-position: 0% 50%; }
+  50%      { transform: scale(1.15); background-position: 100% 50%; }
+}
+
+@keyframes orbGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(255, 188, 217, 0.4),
+      0 0 80px rgba(200, 162, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 60px rgba(137, 207, 240, 0.5),
+      0 0 120px rgba(100, 255, 218, 0.3);
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
 }

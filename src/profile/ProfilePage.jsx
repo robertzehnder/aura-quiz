@@ -1,85 +1,172 @@
-// ProfilePage.jsx
-import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
+import { auraColors } from '../quiz/aura/QuestionBank';
 import './ProfilePage.css';
 
-export default function ProfilePage({ user }) {
-  const [userName, setUserName] = useState('');
-  const [profilePicture, setProfilePicture] = useState('https://s3.amazonaws.com/37assets/svn/765-default-avatar.png');
-  const [auraStatus, setAuraStatus] = useState('In Progress');
+export default function ProfilePage() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+  const [quizResult, setQuizResult] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (!user) {
-        console.error("User is not defined.");
-        return;
-      }
+    if (!user) return;
 
+    const fetchData = async () => {
       try {
-        console.log("Fetching user profile...");
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
+        // Fetch profile
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          console.log("User data:", data);
-          setUserName(data.name || 'User');
-          setProfilePicture(
-            data.profilePicture || 'https://s3.amazonaws.com/37assets/svn/765-default-avatar.png'
-          );
-        } else {
-          console.warn("No user profile found in Firestore.");
-        }
+        setProfile(profileData);
 
-        console.log("Fetching quiz results...");
-        const quizRef = doc(db, 'quizResults', user.uid);
-        const quizSnap = await getDoc(quizRef);
+        // Fetch quiz results
+        const { data: resultData } = await supabase
+          .from('quiz_results')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('quiz_type', 'aura')
+          .order('completed_at', { ascending: false })
+          .limit(1)
+          .single();
 
-        if (quizSnap.exists()) {
-          const quizData = quizSnap.data();
-          console.log("Quiz data:", quizData);
-          setAuraStatus(
-            quizData.aura && quizData.aura.status === 'completed'
-              ? quizData.aura.color
-              : 'In Progress'
-          );
-        } else {
-          console.warn("No quiz results found in Firestore.");
-        }
-      } catch (error) {
-        console.error("Error fetching user profile or quiz data:", error.message);
+        setQuizResult(resultData);
+      } catch (err) {
+        console.log('Profile fetch:', err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserProfile();
+    fetchData();
   }, [user]);
 
   if (loading) {
-    return <div className="loading">Loading profile...</div>;
+    return (
+      <div className="profile-loading">
+        <div className="profile-loading-orb" />
+        <p>loading your vibe... ✨</p>
+      </div>
+    );
   }
+
+  const displayName =
+    profile?.display_name ||
+    user?.user_metadata?.display_name ||
+    user?.email?.split('@')[0] ||
+    'Explorer';
+
+  const topAura = quizResult?.top_result;
+  const auraData = topAura ? auraColors[topAura] : null;
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
-        <img src={profilePicture} alt="Profile" className="profile-picture" />
-        <h1>Welcome, {userName}</h1>
+      {/* Profile Header */}
+      <div className="profile-header glass">
+        <div
+          className="profile-avatar"
+          style={
+            auraData
+              ? { background: auraData.gradient, boxShadow: `0 0 40px ${auraData.glow}` }
+              : {}
+          }
+        >
+          {displayName[0]?.toUpperCase() || '✨'}
+        </div>
+        <h1 className="profile-name">{displayName}</h1>
+        <p className="profile-email">{user?.email}</p>
+        {profile?.username && (
+          <span className="profile-username">@{profile.username}</span>
+        )}
       </div>
-      <div className="profile-content">
-        <div className="tile aura-tile">
-          <h2>Aura</h2>
-          <p>{auraStatus}</p>
+
+      {/* Quiz Results Grid */}
+      <div className="profile-grid">
+        {/* Aura Result Tile */}
+        <div
+          className="profile-tile glass"
+          style={
+            auraData
+              ? {
+                  '--tile-glow': auraData.glow,
+                  '--tile-gradient': auraData.gradient,
+                }
+              : {}
+          }
+        >
+          {auraData && <div className="tile-glow-bg" />}
+          <div className="tile-content">
+            <div className="tile-header">
+              <span className="tile-emoji">{auraData?.emoji || '🔮'}</span>
+              <h2 className="tile-title">Aura</h2>
+            </div>
+            {quizResult ? (
+              <div className="tile-result">
+                <span
+                  className="tile-aura-name"
+                  style={
+                    auraData
+                      ? {
+                          background: auraData.gradient,
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          backgroundClip: 'text',
+                        }
+                      : {}
+                  }
+                >
+                  {topAura}
+                </span>
+                <p className="tile-desc">{auraData?.shortDesc}</p>
+                <span className="tile-date">
+                  taken {new Date(quizResult.completed_at).toLocaleDateString()}
+                </span>
+              </div>
+            ) : (
+              <div className="tile-empty">
+                <p>you haven&apos;t discovered your aura yet</p>
+                <button
+                  className="tile-cta"
+                  onClick={() => navigate('/aura/quiz')}
+                >
+                  take the quiz ✨
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="tile">
-          <h2>Placeholder 2</h2>
-          <p>Placeholder for quiz results</p>
+
+        {/* Placeholder Tiles */}
+        <div className="profile-tile profile-tile-locked glass">
+          <div className="tile-content">
+            <div className="tile-header">
+              <span className="tile-emoji">🧠</span>
+              <h2 className="tile-title">Big 5</h2>
+            </div>
+            <div className="tile-empty">
+              <p>coming soon</p>
+              <span className="tile-locked-icon">🔒</span>
+            </div>
+          </div>
         </div>
-        <div className="tile">
-          <h2>Placeholder 3</h2>
-          <p>Placeholder for quiz results</p>
+
+        <div className="profile-tile profile-tile-locked glass">
+          <div className="tile-content">
+            <div className="tile-header">
+              <span className="tile-emoji">🚀</span>
+              <h2 className="tile-title">Career Path</h2>
+            </div>
+            <div className="tile-empty">
+              <p>coming soon</p>
+              <span className="tile-locked-icon">🔒</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

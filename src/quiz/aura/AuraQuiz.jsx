@@ -1,101 +1,125 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import navigation
-import "./AuraQuiz.css";
-import auraQuestionBank from "./QuestionBank"; // Import question bank
+import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import questions, { responseOptions } from './QuestionBank';
+import './AuraQuiz.css';
 
-const responseOptions = [
-  "This does not describe me",
-  "I am very seldom like this",
-  "I am sometimes like this",
-  "I am often like this",
-  "This is me!",
-];
+export default function AuraQuiz() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [direction, setDirection] = useState('next'); // for slide animation
+  const navigate = useNavigate();
 
-const AuraQuiz = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState({});
-  const navigate = useNavigate(); // Initialize navigation
+  const currentQuestion = questions[currentIndex];
+  const totalQuestions = questions.length;
+  const progress = ((currentIndex + 1) / totalQuestions) * 100;
+  const answeredCount = Object.keys(answers).length;
 
-  const currentQuestion = auraQuestionBank[currentQuestionIndex];
-
-  if (!currentQuestion) {
-    return <div>Loading question...</div>;
-  }
-
-  console.log("Rendering question:", currentQuestion.question);
-  console.log("Current question index:", currentQuestionIndex);
-  console.log("Selected answers state:", selectedAnswers);
-
-  const handleAnswerClick = (index) => {
-    console.log(`✅ Answer selected: ${responseOptions[index]} (index ${index}) for question ${currentQuestionIndex}`);
-
-    setSelectedAnswers((prev) => ({
+  const handleAnswer = useCallback((value) => {
+    setAnswers((prev) => ({
       ...prev,
-      [currentQuestionIndex]: index,
+      [currentQuestion.id]: value,
     }));
-  };
+  }, [currentQuestion.id]);
 
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex < auraQuestionBank.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-    } else {
-      console.log("🎉 Quiz completed:", selectedAnswers);
-      navigate("/quiz/aura/results", { state: { answers: selectedAnswers } }); // Navigate to results page with data
+  const handleNext = () => {
+    if (currentIndex < totalQuestions - 1) {
+      setDirection('next');
+      setCurrentIndex((prev) => prev + 1);
     }
   };
 
-  const handlePreviousQuestion = () => {
-    setCurrentQuestionIndex((prev) => Math.max(prev - 1, 0));
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setDirection('prev');
+      setCurrentIndex((prev) => prev - 1);
+    }
   };
 
+  const handleSubmit = () => {
+    navigate('/aura/results', { state: { answers } });
+  };
+
+  const isLastQuestion = currentIndex === totalQuestions - 1;
+  const hasCurrentAnswer = answers[currentQuestion.id] !== undefined;
+
   return (
-    <div className="aura-quiz-page">
-      {/* Question Section */}
-      <div className="aura-question-section">
-        <div className="aura-progress-bar-container">
+    <div className="quiz-page">
+      {/* Progress Section */}
+      <div className="quiz-progress-section">
+        <div className="quiz-progress-bar-track">
           <div
-            className="aura-progress-bar"
-            style={{
-              width: `${((currentQuestionIndex + 1) / auraQuestionBank.length) * 100}%`,
-            }}
-          ></div>
-          <span className="aura-question-progress">{`Question ${currentQuestionIndex + 1} of ${auraQuestionBank.length}`}</span>
+            className="quiz-progress-bar-fill"
+            style={{ width: `${progress}%` }}
+          />
         </div>
-        <div className="aura-quiz-question">{currentQuestion.question}</div>
+        <div className="quiz-progress-info">
+          <span className="quiz-progress-count">
+            {currentIndex + 1} / {totalQuestions}
+          </span>
+          <span className="quiz-progress-answered">
+            {answeredCount} answered ✨
+          </span>
+        </div>
       </div>
 
-      {/* Answer Section */}
-      <div className="aura-answer-section">
-        {responseOptions.map((option, index) => (
-          <div
-            key={index}
-            className={`aura-quiz-option ${selectedAnswers[currentQuestionIndex] === index ? "selected" : ""}`}
-            onClick={() => handleAnswerClick(index)}
-          >
-            <button>
-              {selectedAnswers[currentQuestionIndex] === index && <span className="checkmark">✔</span>}
+      {/* Question Card */}
+      <div className="quiz-question-area">
+        <div
+          className={`quiz-question-card glass`}
+          key={currentIndex}
+          style={{ animation: `slide-${direction} 0.4s var(--ease-bounce)` }}
+        >
+          <span className="question-number">question {currentIndex + 1}</span>
+          <h2 className="question-text">{currentQuestion.question}</h2>
+        </div>
+      </div>
+
+      {/* Answer Options */}
+      <div className="quiz-options">
+        {responseOptions.map((option) => {
+          const isSelected = answers[currentQuestion.id] === option.value;
+          return (
+            <button
+              key={option.value}
+              className={`quiz-option glass ${isSelected ? 'quiz-option-selected' : ''}`}
+              onClick={() => handleAnswer(option.value)}
+            >
+              <span className="option-emoji">{option.emoji}</span>
+              <span className="option-label">{option.label}</span>
+              {isSelected && <span className="option-check">✓</span>}
             </button>
-            <span className="answer-text">{option}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Navigation Toolbar */}
-      <div className="aura-navigation-toolbar">
+      {/* Navigation */}
+      <div className="quiz-nav">
         <button
-          disabled={currentQuestionIndex === 0}
-          onClick={handlePreviousQuestion}
+          className="quiz-nav-btn quiz-nav-prev"
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
         >
-          Previous
+          ← back
         </button>
-        <button
-          onClick={handleNextQuestion}
-        >
-          {currentQuestionIndex === auraQuestionBank.length - 1 ? "Submit" : "Next"}
-        </button>
+
+        {isLastQuestion ? (
+          <button
+            className="quiz-nav-btn quiz-nav-submit"
+            onClick={handleSubmit}
+            disabled={answeredCount < totalQuestions}
+          >
+            reveal my aura ✨
+          </button>
+        ) : (
+          <button
+            className="quiz-nav-btn quiz-nav-next"
+            onClick={handleNext}
+            disabled={!hasCurrentAnswer}
+          >
+            next →
+          </button>
+        )}
       </div>
     </div>
   );
-};
-
-export default AuraQuiz;
+}
