@@ -1,278 +1,323 @@
-/* Reset box sizing globally */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* ═══════════════════════════════════════════════════
+   AURA QUIZ — Dopamine-Rich Quiz Experience
+   ═══════════════════════════════════════════════════ */
 
-/* Ensure body and html don't introduce extra height */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden; /* Prevent any potential scrolling */
-  background-color: white !important; /* Ensure full white background */
-}
-
-/* Quiz Page Styling */
-.aura-quiz-page {
+.quiz-page {
+  min-height: calc(100vh - var(--toolbar-height));
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Ensure full viewport height */
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-/* Question Section */
-.aura-question-section {
-  flex: 0 0 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background-color: #ffffff;
-  padding: 1rem 0;
-  position: relative;
-}
-
-/* Progress Bar */
-.aura-progress-bar-container {
-  position: relative;
-  width: 50%;
-  height: 0.5rem;
-  background-color: #e9ecef;
+  padding: 24px 20px 40px;
+  max-width: 640px;
   margin: 0 auto;
-  margin-top: 0.5rem;
-  border-radius: 0.25rem;
-  overflow: hidden;
+  gap: 24px;
 }
 
-.aura-progress-bar {
-  height: 100%;
-  width: 50%;
-  background-color: #007bff;
-  transition: width 0.3s ease;
-}
+/* ── Progress Bar ───────────────────────────────── */
 
-/* Centered Question Text */
-.aura-quiz-question {
-  font-size: 1.75rem;
-  font-weight: bold;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0.5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.quiz-progress-section {
   width: 100%;
-  height: 100%;
-}
-
-/* Ensure the answer section takes up remaining space dynamically */
-.aura-answer-section {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  overflow: hidden;
-  height: calc(100vh - 20% - 10%);
-  max-height: calc(100vh - 20% - 10%);
-  background: white !important; /* Ensure no blue background */
-}
-
-/* Answer Tiles */
-.aura-quiz-option {
-  flex: 1;
-  height: 97.5%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  background-color: white !important; /* Ensures no blue background */
+  gap: 8px;
 }
 
-/* Answer text inside the tiles */
-.answer-text {
-  display: block;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  color: inherit;
-  margin-top: 30px;
+.quiz-progress-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
 }
 
-/* Add a button-style circle */
-.aura-quiz-option button {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 3px solid currentColor;
-  background-color: currentColor; /* Retains base color */
-  cursor: pointer;
-  position: relative;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+.quiz-progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--cotton-candy),
+    var(--lavender-dream),
+    var(--baby-blue),
+    var(--mint),
+    var(--sunset-glow)
+  );
+  background-size: 300% 100%;
+  animation: progressShimmer 4s ease-in-out infinite;
+  transition: width 0.5s var(--ease-bounce);
+  box-shadow: 0 0 12px rgba(200, 162, 255, 0.4);
 }
 
-/* Add hover effect to expand the shadow */
-.aura-quiz-option button:hover::before {
-  width: 175%;  /* Expands by 25% */
-  height: 175%;
-  top: -37.5%;
-  left: -37.5%;
-  opacity: 0.5; /* Slightly stronger glow */
-  transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, opacity 0.3s ease;
-}
-
-/* Ensure it smoothly returns to normal when hover stops */
-.aura-quiz-option button::before {
-  content: "";
-  position: absolute;
-  width: 140%;
-  height: 140%;
-  top: -20%;
-  left: -20%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--button-border-color) 20%, rgba(255, 255, 255, 0) 80%);
-  opacity: 0.4;
-  transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, opacity 0.3s ease;
-}
-
-/* Reduce opacity of glow when not selected */
-.aura-quiz-option button:not(.selected)::before {
-  opacity: 0.2;
-}
-
-/* Ensure selected buttons maintain styling */
-.aura-quiz-option.selected button {
-  background-color: currentColor !important;
-  color: white;
-  border-color: currentColor !important;
-  box-shadow: 0 0 20px 8px currentColor; /* Stronger glow for selection */
-}
-
-/* Ensure checkmark remains white */
-.aura-quiz-option.selected button .checkmark {
-  display: block;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.aura-quiz-option:nth-child(1) {
-  --button-border-color: #d9534f;
-}
-.aura-quiz-option:nth-child(2) {
-  --button-border-color: #f0ad4e;
-}
-.aura-quiz-option:nth-child(3) {
-  --button-border-color: #6c757d;
-}
-.aura-quiz-option:nth-child(4) {
-  --button-border-color: #5bc0de;
-}
-.aura-quiz-option:nth-child(5) {
-  --button-border-color: #5cb85c;
-}
-
-/* Lighter colors when unselected, full colors when selected */
-.aura-quiz-option:nth-child(1) button {
-  background-color: #f5baba; /* Lighter red */
-  border-color: #d9534f;
-  box-shadow: 0 0 12px #d9534f;
-}
-
-.aura-quiz-option:nth-child(1).selected button {
-  background-color: #d9534f !important;
-}
-
-.aura-quiz-option:nth-child(2) button {
-  background-color: #f8db95; /* Lighter yellow */
-  border-color: #f0ad4e;
-  box-shadow: 0 0 12px #f0ad4e;
-}
-
-.aura-quiz-option:nth-child(2).selected button {
-  background-color: #f0ad4e !important;
-}
-
-.aura-quiz-option:nth-child(3) button {
-  background-color: #cfcfd1; /* Lighter gray */
-  border-color: #6c757d;
-  box-shadow: 0 0 12px #6c757d;
-}
-
-.aura-quiz-option:nth-child(3).selected button {
-  background-color: #6c757d !important;
-}
-
-.aura-quiz-option:nth-child(4) button {
-  background-color: #99d3f0; /* Lighter blue */
-  border-color: #5bc0de;
-  box-shadow: 0 0 12px #5bc0de;
-}
-
-.aura-quiz-option:nth-child(4).selected button {
-  background-color: #5bc0de !important;
-}
-
-.aura-quiz-option:nth-child(5) button {
-  background-color: #98e098; /* Lighter green */
-  border-color: #5cb85c;
-  box-shadow: 0 0 12px #5cb85c;
-}
-
-.aura-quiz-option:nth-child(5).selected button {
-  background-color: #5cb85c !important;
-}
-
-/* Navigation Toolbar */
-.aura-navigation-toolbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 8%;
-  background-color: #f8f9fa;
+.quiz-progress-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
-  border-top: 1px solid #ddd;
 }
 
-/* Navigation Buttons */
-.aura-navigation-toolbar button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  min-width: 100px;
+.quiz-progress-count {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
-/* Previous Button */
-.aura-navigation-toolbar button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.quiz-progress-answered {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-/* Next Button */
-.aura-navigation-toolbar button:last-child {
-  background-color: #007bff;
+/* ── Question Card ──────────────────────────────── */
+
+.quiz-question-area {
+  width: 100%;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-question-card {
+  width: 100%;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.question-number {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  padding: 4px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+}
+
+.question-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+/* ── Answer Options ─────────────────────────────── */
+
+.quiz-options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.35s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 188, 217, 0.15), rgba(168, 162, 255, 0.15));
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-smooth);
+  border-radius: inherit;
+}
+
+.quiz-option:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateX(4px);
+  color: var(--text-primary);
+}
+
+.quiz-option:hover::before {
+  opacity: 1;
+}
+
+/* Selected state */
+.quiz-option-selected {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(200, 162, 255, 0.5);
+  color: var(--text-primary);
+  box-shadow:
+    0 0 20px rgba(200, 162, 255, 0.15),
+    inset 0 0 20px rgba(200, 162, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.quiz-option-selected::before {
+  opacity: 1;
+}
+
+.option-emoji {
+  font-size: 1.3rem;
+  transition: transform 0.3s var(--ease-bounce);
+  position: relative;
+  z-index: 1;
+}
+
+.quiz-option:hover .option-emoji,
+.quiz-option-selected .option-emoji {
+  transform: scale(1.2);
+}
+
+.option-label {
+  flex: 1;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.option-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cotton-candy), var(--lilac));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
   color: white;
-  min-width: 100px;
+  animation: checkPop 0.3s var(--ease-bounce);
+  position: relative;
+  z-index: 1;
 }
 
-.aura-navigation-toolbar button:last-child:hover:not(:disabled) {
-  background-color: #0056b3;
+/* ── Navigation ─────────────────────────────────── */
+
+.quiz-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.quiz-nav-btn {
+  padding: 14px 28px;
+  border-radius: 16px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.35s var(--ease-smooth);
+  letter-spacing: 0.02em;
+}
+
+.quiz-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.quiz-nav-prev {
+  color: var(--text-muted);
+}
+
+.quiz-nav-prev:hover:not(:disabled) {
+  color: var(--text-secondary);
+}
+
+.quiz-nav-next,
+.quiz-nav-submit {
+  background: linear-gradient(135deg, rgba(255, 188, 217, 0.25), rgba(168, 162, 255, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+.quiz-nav-next:hover:not(:disabled),
+.quiz-nav-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(200, 162, 255, 0.3),
+    0 0 20px rgba(255, 188, 217, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.quiz-nav-submit {
+  background: linear-gradient(135deg, rgba(255, 188, 217, 0.4), rgba(168, 162, 255, 0.4));
+  animation: submitGlow 2s ease-in-out infinite;
+}
+
+/* ── Animations ─────────────────────────────────── */
+
+@keyframes slide-next {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+@keyframes progressShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes submitGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(200, 162, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(200, 162, 255, 0.4),
+      0 0 60px rgba(255, 188, 217, 0.2);
+  }
+}
+
+/* ── Responsive ─────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .quiz-page {
+    padding: 16px 16px 32px;
+    gap: 16px;
+  }
+
+  .quiz-question-card {
+    padding: 28px 20px;
+  }
+
+  .quiz-option {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .quiz-nav-btn {
+    padding: 12px 20px;
+    font-size: 0.85rem;
+  }
 }

@@ -1,149 +1,106 @@
-import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore'; // Import getDoc
-import { auth, db } from '../firebaseConfig';
-import './AuthForm.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-export default function SignUp({ onSwitchToSignIn, onSignIn }) {
+export default function SignUp({ onSwitchToSignIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
-  const [errors, setErrors] = useState({});
-  const [valid, setValid] = useState({});
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-  const validateFullName = (name) => {
-    return name.trim().length > 0;
-  };
-
-  const validateUsername = async (username) => {
-    if (username.trim().length === 0) return false;
-    const usernameDoc = doc(db, 'users', username);
-    const docSnapshot = await getDoc(usernameDoc);
-    return !docSnapshot.exists();
-  };
-
-  const validatePassword = (password) => {
-    return password.length >= 6; // Add more criteria if needed
-  };
-
-  const handleInputChange = async (field, value) => {
-    let isValid = false;
-    let error = '';
-
-    if (field === 'email') {
-      isValid = validateEmail(value);
-      error = isValid ? '' : 'Invalid email format';
-    } else if (field === 'displayName') {
-      isValid = validateFullName(value);
-      error = isValid ? '' : 'Full name cannot be empty';
-    } else if (field === 'username') {
-      isValid = await validateUsername(value);
-      error = isValid ? '' : 'Username already taken';
-    } else if (field === 'password') {
-      isValid = validatePassword(value);
-      error = isValid ? '' : 'Password must be at least 6 characters';
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
     }
 
-    setValid((prev) => ({ ...prev, [field]: isValid }));
-    setErrors((prev) => ({ ...prev, [field]: error }));
+    setLoading(true);
 
-    if (field === 'email') setEmail(value);
-    else if (field === 'displayName') setDisplayName(value);
-    else if (field === 'username') setUsername(value);
-    else if (field === 'password') setPassword(value);
-  };
-
-  const handleSignUp = async (e) => {
-    e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(userCredential.user, { displayName });
-
-      // Add user profile to Firestore
-      const userData = {
-        name: displayName,
-        email,
+      await signUp(email, password, {
+        display_name: displayName,
         username,
-        quizzes: [], // Initialize with an empty array for quizzes
-        createdAt: new Date(),
-      };
-
-      await setDoc(doc(db, 'users', userCredential.user.uid), userData);
-
-      onSignIn?.(userCredential.user);
+      });
+      navigate('/profile');
     } catch (err) {
-      console.error('Error signing up:', err);
-      alert(`Error signing up: ${err.message}`);
+      setError(err.message || 'Failed to sign up');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSignUp}>
-      <div className="input-container">
-        <label htmlFor="email">E-mail</label>
+    <form className="auth-form" onSubmit={handleSubmit}>
+      {error && <div className="auth-error">{error}</div>}
+
+      <div className="input-group">
+        <label htmlFor="signup-email">email</label>
         <input
           type="email"
-          id="email"
-          placeholder="example@email.com"
+          id="signup-email"
+          placeholder="your@email.com"
           value={email}
-          onChange={(e) => handleInputChange('email', e.target.value)}
-          className={valid.email === false ? 'invalid' : valid.email ? 'valid' : ''}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
-        {errors.email && <small className="error-message">{errors.email}</small>}
       </div>
-      <div className="input-container">
-        <label htmlFor="displayName">Full Name</label>
+
+      <div className="input-group">
+        <label htmlFor="display-name">display name</label>
         <input
           type="text"
-          id="displayName"
-          placeholder="Enter your full name"
+          id="display-name"
+          placeholder="what should we call you?"
           value={displayName}
-          onChange={(e) => handleInputChange('displayName', e.target.value)}
-          className={valid.displayName === false ? 'invalid' : valid.displayName ? 'valid' : ''}
+          onChange={(e) => setDisplayName(e.target.value)}
+          required
         />
-        {errors.displayName && <small className="error-message">{errors.displayName}</small>}
       </div>
-      <div className="input-container">
-        <label htmlFor="username">Username</label>
+
+      <div className="input-group">
+        <label htmlFor="username">username</label>
         <input
           type="text"
           id="username"
-          placeholder="Enter your username"
+          placeholder="@yourhandle"
           value={username}
-          onChange={(e) => handleInputChange('username', e.target.value)}
-          className={valid.username === false ? 'invalid' : valid.username ? 'valid' : ''}
+          onChange={(e) => setUsername(e.target.value)}
+          required
         />
-        {errors.username && <small className="error-message">{errors.username}</small>}
       </div>
-      <div className="input-container">
-        <label htmlFor="password">Password</label>
+
+      <div className="input-group">
+        <label htmlFor="signup-password">password</label>
         <input
           type="password"
-          id="password"
-          placeholder="Enter your password"
+          id="signup-password"
+          placeholder="min 6 characters"
           value={password}
-          onChange={(e) => handleInputChange('password', e.target.value)}
-          className={valid.password === false ? 'invalid' : valid.password ? 'valid' : ''}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          minLength={6}
         />
-        {errors.password && <small className="error-message">{errors.password}</small>}
       </div>
-      <button
-        type="submit"
-        className="primary-btn"
-        disabled={Object.values(valid).some((value) => value === false || value === undefined)}
-      >
-        Sign Up
+
+      <button type="submit" className="auth-submit" disabled={loading}>
+        {loading ? (
+          <span className="auth-spinner" />
+        ) : (
+          'create account 🌟'
+        )}
       </button>
-      <p>
-        Already have an account?{' '}
-        <button type="button" className="link-btn" onClick={onSwitchToSignIn}>
-          Sign In
+
+      <p className="auth-switch">
+        already have an account?{' '}
+        <button type="button" className="auth-switch-btn" onClick={onSwitchToSignIn}>
+          sign in
         </button>
       </p>
     </form>

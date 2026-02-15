@@ -1,78 +1,215 @@
-/* General page styles */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: #213547;
-  background: linear-gradient(to bottom, #d4f3fa, #b8e4f2);
-}
+/* ═══════════════════════════════════════════════════
+   LANDING PAGE — Dreamy Quiz Gallery
+   ═══════════════════════════════════════════════════ */
 
-/* Container for the gallery */
-.landing-gallery {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 0 20px;
-  overflow: hidden;
-  width: 100%;
-  margin-top: 100px; /* Add spacing between toolbar and gallery */
-}
-
-/* Individual gallery items */
-.gallery-item {
-  flex: 1;
-  max-width: 12.5%; /* Set the default size to half the current size */
-  height: 70vh; /* Maintain the height */
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transition: all 0.5s ease;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  background-size: cover;
-  background-position: center;
-}
-
-/* Hover effect for gallery items */
-.gallery-item:hover {
-  flex: 1.5; /* Reduce the expansion */
-  max-width: 30%; /* Adjust to 75% of the previous expansion */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-
-/* Content inside each gallery item */
-.gallery-content {
-  text-align: center;
-  padding: 20px;
-  color: white;
-  z-index: 1;
+.landing {
+  min-height: 100vh;
+  padding: 40px 20px 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-/* Title always visible */
-.gallery-title {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #213547;
+/* ── Hero Section ───────────────────────────────── */
+
+.landing-hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  max-width: 700px;
 }
 
-/* Description hidden by default */
-.gallery-description {
-  font-size: 1.2rem;
-  color: rgba(33, 53, 71, 0.8);
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── Quiz Gallery ───────────────────────────────── */
+
+.quiz-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+  padding: 20px 0;
+}
+
+/* ── Quiz Cards ─────────────────────────────────── */
+
+.quiz-card {
+  position: relative;
+  padding: 40px 32px;
+  text-align: left;
+  overflow: hidden;
+  transition: all 0.5s var(--ease-smooth);
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-gradient);
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s var(--ease-smooth);
+  border-radius: inherit;
 }
 
-/* Show description on hover */
-.gallery-item:hover .gallery-description {
-  opacity: 1;
+.quiz-card:hover::before {
+  opacity: 0.08;
+}
+
+.quiz-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 40px var(--card-glow);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.quiz-card:active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* ── Card Shimmer Effect ────────────────────────── */
+
+.card-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transition: none;
+}
+
+.quiz-card:hover .card-shimmer {
+  animation: shimmer 1.5s ease-in-out;
+}
+
+/* ── Card Content ───────────────────────────────── */
+
+.card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  display: block;
+  transition: transform 0.5s var(--ease-bounce);
+}
+
+.quiz-card:hover .card-emoji {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: var(--card-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-bottom: 16px;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.card-cta {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.3s var(--ease-smooth);
+  letter-spacing: 0.03em;
+}
+
+.quiz-card:hover .card-cta {
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+}
+
+.card-coming-soon {
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Locked Cards ───────────────────────────────── */
+
+.quiz-card-locked {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.quiz-card-locked:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.quiz-card-locked:hover::before {
+  opacity: 0;
+}
+
+/* ── Shimmer Animation ──────────────────────────── */
+
+@keyframes shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ── Responsive ─────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .quiz-gallery {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .quiz-card {
+    min-height: 260px;
+    padding: 32px 24px;
+  }
+
+  .landing-hero {
+    padding: 40px 20px 20px;
+  }
 }
