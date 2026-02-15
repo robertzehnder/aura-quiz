@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export default function SignIn({ onSwitchToSignUp }) {
+export default function SignIn({ onSwitchToSignUp, redirectState = {} }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,7 +17,16 @@ export default function SignIn({ onSwitchToSignUp }) {
 
     try {
       await signIn(email, password);
-      navigate('/profile');
+
+      // If coming from results page, redirect back with answers
+      if (redirectState.from && redirectState.answers) {
+        navigate(redirectState.from, {
+          state: { answers: redirectState.answers },
+          replace: true,
+        });
+      } else {
+        navigate('/profile');
+      }
     } catch (err) {
       setError(err.message || 'Failed to sign in');
     } finally {

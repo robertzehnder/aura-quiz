@@ -90,7 +90,7 @@ export default function ProfilePage() {
       <div className="profile-grid">
         {/* Aura Result Tile */}
         <div
-          className="profile-tile glass"
+          className={`profile-tile glass ${quizResult ? 'profile-tile-clickable' : ''}`}
           style={
             auraData
               ? {
@@ -98,6 +98,27 @@ export default function ProfilePage() {
                   '--tile-gradient': auraData.gradient,
                 }
               : {}
+          }
+          onClick={
+            quizResult
+              ? () =>
+                  navigate('/aura/results', {
+                    state: { answers: quizResult.answers },
+                  })
+              : undefined
+          }
+          role={quizResult ? 'button' : undefined}
+          tabIndex={quizResult ? 0 : undefined}
+          onKeyDown={
+            quizResult
+              ? (e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    navigate('/aura/results', {
+                      state: { answers: quizResult.answers },
+                    });
+                  }
+                }
+              : undefined
           }
         >
           {auraData && <div className="tile-glow-bg" />}
@@ -127,6 +148,7 @@ export default function ProfilePage() {
                 <span className="tile-date">
                   taken {new Date(quizResult.completed_at).toLocaleDateString()}
                 </span>
+                <span className="tile-view-hint">tap to view & share →</span>
               </div>
             ) : (
               <div className="tile-empty">
