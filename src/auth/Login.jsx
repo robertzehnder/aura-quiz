@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import './AuthForm.css';
 
 export default function Login() {
-  const [showSignUp, setShowSignUp] = useState(false);
+  const location = useLocation();
+  const redirectState = location.state || {};
+  // If coming from results page, default to sign up
+  const [showSignUp, setShowSignUp] = useState(!!redirectState.from);
 
   return (
     <div className="auth-page">
@@ -16,15 +20,23 @@ export default function Login() {
           </h1>
           <p className="auth-subtitle">
             {showSignUp
-              ? 'create your account to save your aura results'
+              ? redirectState.from
+                ? 'create an account to save your aura results'
+                : 'create your account to save your aura results'
               : 'sign in to continue your self-discovery'}
           </p>
         </div>
 
         {showSignUp ? (
-          <SignUp onSwitchToSignIn={() => setShowSignUp(false)} />
+          <SignUp
+            onSwitchToSignIn={() => setShowSignUp(false)}
+            redirectState={redirectState}
+          />
         ) : (
-          <SignIn onSwitchToSignUp={() => setShowSignUp(true)} />
+          <SignIn
+            onSwitchToSignUp={() => setShowSignUp(true)}
+            redirectState={redirectState}
+          />
         )}
       </div>
     </div>

@@ -178,7 +178,35 @@
 .tile-date {
   font-size: 0.75rem;
   color: var(--text-muted);
+}
+
+.tile-view-hint {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
   margin-top: auto;
+  opacity: 0.6;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+/* ── Clickable Tile ────────────────────────────── */
+
+.profile-tile-clickable {
+  cursor: pointer;
+}
+
+.profile-tile-clickable:hover .tile-view-hint {
+  opacity: 1;
+  color: var(--text-secondary);
+}
+
+.profile-tile-clickable:hover .tile-glow-bg {
+  opacity: 0.14;
+}
+
+.profile-tile-clickable:active {
+  transform: translateY(-2px) scale(0.99);
 }
 
 /* ── Tile Empty State ───────────────────────────── */

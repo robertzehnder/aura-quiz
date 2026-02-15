@@ -4,13 +4,15 @@
 
 .quiz-page {
   height: calc(100vh - var(--toolbar-height));
+  height: calc(100dvh - var(--toolbar-height));
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 20px 24px;
+  justify-content: center;
+  padding: 16px 20px 16px;
   max-width: 640px;
   margin: 0 auto;
-  gap: 20px;
+  gap: 12px;
   overflow: hidden;
 }
 
@@ -71,7 +73,6 @@
 .quiz-question-area {
   width: 100%;
   min-height: 0;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,9 +112,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  flex: 1;
-  justify-content: center;
+  gap: 8px;
   min-height: 0;
 }
 
@@ -121,7 +120,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 20px;
+  padding: 14px 20px;
   border-radius: 18px;
   font-size: 0.95rem;
   font-weight: 500;
@@ -129,6 +128,7 @@
   transition: all 0.35s var(--ease-smooth);
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .quiz-option::before {
@@ -309,27 +309,40 @@
 
 @media (max-width: 480px) {
   .quiz-page {
-    padding: 12px 16px 16px;
-    gap: 10px;
+    padding: 12px 16px 12px;
+    gap: 8px;
   }
 
   .quiz-question-card {
-    padding: 20px 16px;
+    padding: 16px 16px;
   }
 
   .question-number {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 0.7rem;
+    padding: 3px 12px;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
   }
 
   .quiz-option {
-    padding: 12px 14px;
+    padding: 11px 14px;
     gap: 10px;
     font-size: 0.9rem;
+    border-radius: 14px;
   }
 
   .option-emoji {
     font-size: 1.1rem;
+  }
+
+  .option-check {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
   }
 
   .quiz-nav-btn {
@@ -339,5 +352,13 @@
 
   .quiz-progress-section {
     gap: 4px;
+  }
+
+  .quiz-progress-bar-track {
+    height: 4px;
+  }
+
+  .quiz-options {
+    gap: 6px;
   }
 }
