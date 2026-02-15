@@ -3,18 +3,21 @@
    ═══════════════════════════════════════════════════ */
 
 .landing {
-  min-height: 100vh;
-  padding: 40px 20px 80px;
+  min-height: calc(100vh - var(--toolbar-height));
+  max-height: calc(100vh - var(--toolbar-height));
+  padding: 20px 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 /* ── Hero Section ───────────────────────────────── */
 
 .landing-hero {
   text-align: center;
-  padding: 60px 20px 40px;
+  padding: 20px 20px 24px;
   max-width: 700px;
 }
 
@@ -47,11 +50,11 @@
 
 .quiz-card {
   position: relative;
-  padding: 40px 32px;
+  padding: 32px 28px;
   text-align: left;
   overflow: hidden;
   transition: all 0.5s var(--ease-smooth);
-  min-height: 320px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -199,17 +202,22 @@
 /* ── Responsive ─────────────────────────────────── */
 
 @media (max-width: 768px) {
+  .landing {
+    justify-content: flex-start;
+    max-height: none;
+    overflow: auto;
+  }
+
   .quiz-gallery {
     grid-template-columns: 1fr;
     max-width: 500px;
   }
 
   .quiz-card {
-    min-height: 260px;
-    padding: 32px 24px;
+    padding: 24px 20px;
   }
 
   .landing-hero {
-    padding: 40px 20px 20px;
+    padding: 20px 20px 12px;
   }
 }
