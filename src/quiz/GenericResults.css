@@ -1,0 +1,308 @@
+/* ═══════════════════════════════════════════════════
+   GENERIC RESULTS — Quiz Results Styling
+   ═══════════════════════════════════════════════════ */
+
+.generic-results-page {
+  min-height: calc(100vh - var(--toolbar-height));
+  padding: 24px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Hero ──────────────────────────────────────────── */
+
+.gr-hero {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 20px 24px;
+  animation: grFadeIn 0.6s var(--ease-smooth);
+}
+
+.gr-hero-glow {
+  position: absolute;
+  inset: -40px;
+  background: var(--gr-gradient);
+  opacity: 0.1;
+  filter: blur(60px);
+  border-radius: 50%;
+  z-index: -1;
+  animation: grGlowPulse 4s ease-in-out infinite;
+}
+
+@keyframes grGlowPulse {
+  0%, 100% { opacity: 0.08; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.05); }
+}
+
+@keyframes grFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gr-hero-emoji {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+  animation: grEmojiPop 0.5s var(--ease-bounce) 0.2s both;
+}
+
+@keyframes grEmojiPop {
+  from { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  to { transform: scale(1); }
+}
+
+.gr-hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  background: var(--gr-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+
+.gr-hero-type {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: var(--gr-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 4px 0;
+}
+
+.gr-hero-quiz {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+/* ── Description ───────────────────────────────────── */
+
+.gr-description {
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: 20px;
+  text-align: center;
+  animation: grFadeIn 0.7s var(--ease-smooth) 0.1s both;
+}
+
+.gr-description p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ── Traits ─────────────────────────────────────────── */
+
+.gr-traits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.gr-trait {
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  animation: grTraitPop 0.4s var(--ease-bounce) both;
+}
+
+@keyframes grTraitPop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Score Breakdown ───────────────────────────────── */
+
+.gr-breakdown {
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: 20px;
+  animation: grFadeIn 0.8s var(--ease-smooth) 0.2s both;
+}
+
+.gr-breakdown-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Score bars */
+.gr-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gr-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gr-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.gr-bar-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.gr-bar-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.gr-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 1.2s var(--ease-smooth);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+/* MBTI dimensions */
+.gr-mbti-dims {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gr-mbti-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gr-mbti-pole {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+  transition: color 0.3s;
+}
+
+.gr-mbti-pole.active {
+  color: var(--text-primary);
+}
+
+.gr-mbti-track {
+  flex: 1;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.gr-mbti-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s var(--ease-smooth);
+}
+
+.gr-mbti-pct {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  width: 36px;
+  text-align: right;
+}
+
+/* ── Actions ───────────────────────────────────────── */
+
+.gr-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  animation: grFadeIn 0.9s var(--ease-smooth) 0.3s both;
+}
+
+.gr-action {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.gr-action:hover {
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.gr-retake {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Responsive ────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .generic-results-page {
+    padding: 16px 14px 60px;
+    gap: 14px;
+  }
+
+  .gr-hero-emoji {
+    font-size: 3rem;
+  }
+
+  .gr-hero-name {
+    font-size: 1.4rem;
+  }
+
+  .gr-description {
+    padding: 16px 18px;
+  }
+
+  .gr-breakdown {
+    padding: 16px 18px;
+  }
+
+  .gr-trait {
+    padding: 6px 14px;
+    font-size: 0.78rem;
+  }
+
+  .gr-actions {
+    flex-direction: column;
+  }
+}

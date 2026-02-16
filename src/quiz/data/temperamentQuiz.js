@@ -1,0 +1,35 @@
+import { LIKERT_ME } from './scales';
+
+export default {
+  id: 'temperament',
+  title: 'Temperament',
+  subtitle: 'Your ancient nature',
+  emoji: '🏛️',
+  gradient: 'linear-gradient(135deg, #FFB6C1, #FFDAB9, #FFD700)',
+  type: 'likert',
+  likertOptions: LIKERT_ME,
+  questions: [
+    { id: 1, text: 'I\'m the life of the party and love being surrounded by people.', category: 'sanguine' },
+    { id: 2, text: 'I\'m ambitious, goal-driven, and naturally take the lead.', category: 'choleric' },
+    { id: 3, text: 'I\'m thoughtful, detail-oriented, and tend toward perfectionism.', category: 'melancholic' },
+    { id: 4, text: 'I\'m easygoing, calm, and rarely get upset about anything.', category: 'phlegmatic' },
+    { id: 5, text: 'I make friends easily and love telling stories.', category: 'sanguine' },
+    { id: 6, text: 'I get impatient when people don\'t work as fast as I do.', category: 'choleric' },
+    { id: 7, text: 'I analyze every situation deeply before making decisions.', category: 'melancholic' },
+    { id: 8, text: 'I\'m content with routine and don\'t need much excitement.', category: 'phlegmatic' },
+    { id: 9, text: 'My enthusiasm is contagious — I energize everyone around me.', category: 'sanguine' },
+    { id: 10, text: 'I\'m decisive and don\'t second-guess my choices.', category: 'choleric' },
+    { id: 11, text: 'I feel things deeply — both joy and sadness hit me hard.', category: 'melancholic' },
+    { id: 12, text: 'I\'m a great mediator because I see all sides of an argument.', category: 'phlegmatic' },
+    { id: 13, text: 'I\'m spontaneous and hate doing the same thing twice.', category: 'sanguine' },
+    { id: 14, text: 'I thrive under pressure and love a good challenge.', category: 'choleric' },
+    { id: 15, text: 'I need alone time to process my thoughts and emotions.', category: 'melancholic' },
+    { id: 16, text: 'I avoid conflict at all costs and just want everyone to get along.', category: 'phlegmatic' },
+  ],
+  results: {
+    sanguine: { name: 'Sanguine', emoji: '☀️', color: '#FFD700', gradient: 'linear-gradient(135deg, #FFD700, #FFA500)', description: 'You have a Sanguine temperament — the ancient profile of joy, social energy, and boundless optimism. You light up every room, make friends effortlessly, and approach life with infectious enthusiasm. You are the sunshine in human form.', traits: ['Optimistic', 'Social', 'Spontaneous', 'Enthusiastic', 'Fun-loving'] },
+    choleric: { name: 'Choleric', emoji: '🔥', color: '#FF4444', gradient: 'linear-gradient(135deg, #FF4444, #FF6B00)', description: 'You have a Choleric temperament — the ancient profile of leadership, ambition, and decisive action. You\'re a natural-born leader who thrives on challenges and drives results. Where others hesitate, you act.', traits: ['Ambitious', 'Decisive', 'Strong-willed', 'Goal-oriented', 'Independent'] },
+    melancholic: { name: 'Melancholic', emoji: '🌙', color: '#89CFF0', gradient: 'linear-gradient(135deg, #89CFF0, #C8A2FF)', description: 'You have a Melancholic temperament — the ancient profile of depth, beauty, and thoughtful introspection. You feel the world intensely, notice what others miss, and create beauty from the raw material of human experience.', traits: ['Thoughtful', 'Detail-oriented', 'Sensitive', 'Creative', 'Perfectionist'] },
+    phlegmatic: { name: 'Phlegmatic', emoji: '🕊️', color: '#98FF98', gradient: 'linear-gradient(135deg, #98FF98, #64FFDA)', description: 'You have a Phlegmatic temperament — the ancient profile of peace, patience, and calm wisdom. You are the steady anchor in every storm, the voice of reason, and the peacemaker who brings harmony to chaos.', traits: ['Calm', 'Diplomatic', 'Patient', 'Consistent', 'Reliable'] },
+  },
+};

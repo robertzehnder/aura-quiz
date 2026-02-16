@@ -1,0 +1,559 @@
+/* ═══════════════════════════════════════════════════
+   TIER PAGE — Detail Screen Styling
+   ═══════════════════════════════════════════════════ */
+
+.tier-page {
+  min-height: calc(100vh - var(--toolbar-height));
+  padding: 16px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background orbs */
+.tier-bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  background: var(--tier-gradient);
+  opacity: 0.06;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tier-bg-orb-1 {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  right: -100px;
+  animation: orbFloat1 12s ease-in-out infinite;
+}
+
+.tier-bg-orb-2 {
+  width: 350px;
+  height: 350px;
+  bottom: -80px;
+  left: -80px;
+  animation: orbFloat2 15s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 30px); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -20px); }
+}
+
+/* ── Back Button ────────────────────────────────────── */
+
+.tier-back-btn {
+  align-self: flex-start;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: all 0.3s var(--ease-smooth);
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.tier-back-btn:hover {
+  color: var(--text-primary);
+  transform: translateX(-4px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Hero Banner ────────────────────────────────────── */
+
+.tier-hero {
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 20px 0;
+  z-index: 2;
+  animation: tierHeroFadeIn 0.6s var(--ease-smooth);
+}
+
+@keyframes tierHeroFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tier-hero-badge {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--tier-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 30px var(--tier-glow),
+    0 0 60px var(--tier-glow),
+    inset 0 0 15px rgba(255, 255, 255, 0.15);
+  animation: badgeGlow 3s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 30px var(--tier-glow), 0 0 60px var(--tier-glow); }
+  50% { box-shadow: 0 0 40px var(--tier-glow), 0 0 80px var(--tier-glow), 0 0 120px var(--tier-glow); }
+}
+
+.tier-hero-emoji {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+.tier-hero-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tier-hero-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  background: var(--tier-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: -4px 0;
+}
+
+.tier-hero-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.tier-hero-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* Progress bar */
+.tier-hero-progress {
+  width: 100%;
+  max-width: 360px;
+  margin-top: 8px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--tier-gradient);
+  border-radius: 4px;
+  transition: width 1s var(--ease-smooth);
+  box-shadow: 0 0 8px var(--tier-glow);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ── Reward Card ────────────────────────────────────── */
+
+.tier-reward-card {
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  border-color: rgba(255, 215, 0, 0.15);
+  z-index: 2;
+  animation: tierHeroFadeIn 0.8s var(--ease-smooth);
+}
+
+.tier-reward-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.tier-reward-icon span:first-child {
+  font-size: 1.8rem;
+  animation: tokenSpin 4s ease-in-out infinite;
+}
+
+@keyframes tokenSpin {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+}
+
+.tier-reward-amount {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  color: #FFD700;
+}
+
+.tier-reward-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tier-reward-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.tier-reward-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.tier-reward-status {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.tier-reward-status.locked {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+}
+
+.tier-reward-status.unlocked {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #0d0221;
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.3);
+  animation: rewardGlow 2s ease-in-out infinite;
+}
+
+@keyframes rewardGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(255, 215, 0, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.2); }
+}
+
+/* ── Quest List ─────────────────────────────────────── */
+
+.tier-quest-list {
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+
+.tier-quest-list-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding-left: 4px;
+  margin-bottom: 4px;
+}
+
+/* Individual quiz row */
+.tier-quiz-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  transition: all 0.35s var(--ease-smooth);
+  animation: rowSlideIn 0.5s var(--ease-smooth) both;
+  animation-delay: var(--row-delay, 0s);
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes rowSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.tier-quiz-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--row-gradient);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tier-quiz-row:hover:not(:disabled)::before {
+  opacity: 0.06;
+}
+
+.tier-quiz-row:hover:not(:disabled) {
+  transform: translateX(4px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.tier-quiz-row:active:not(:disabled) {
+  transform: translateX(2px) scale(0.99);
+}
+
+.tier-quiz-row:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Number badge */
+.tier-quiz-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.number-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.number-check {
+  font-size: 1rem;
+  color: #64FFDA;
+  font-weight: 700;
+}
+
+.tier-quiz-row.completed .tier-quiz-number {
+  background: rgba(100, 255, 218, 0.12);
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+/* Quiz info */
+.tier-quiz-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1;
+}
+
+.tier-quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tier-quiz-emoji {
+  font-size: 1.3rem;
+}
+
+.tier-quiz-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tier-quiz-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tier-quiz-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Status icon */
+.tier-quiz-status {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  z-index: 1;
+}
+
+.status-complete {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.status-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--row-gradient);
+  font-size: 0.8rem;
+  color: #0d0221;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+  transition: all 0.3s;
+}
+
+.tier-quiz-row:hover:not(:disabled) .status-play {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+}
+
+.status-lock {
+  opacity: 0.4;
+}
+
+/* ── Tier Navigation ────────────────────────────────── */
+
+.tier-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 580px;
+  gap: 12px;
+  margin-top: 12px;
+  z-index: 2;
+}
+
+.tier-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.tier-nav-btn:hover {
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tier-nav-emoji {
+  font-size: 1.2rem;
+}
+
+.tier-nav-label {
+  font-size: 0.82rem;
+}
+
+/* ── Not Found ──────────────────────────────────────── */
+
+.tier-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-top: 80px;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 500px) {
+  .tier-page {
+    padding: 12px 12px 60px;
+    gap: 14px;
+  }
+
+  .tier-hero-badge {
+    width: 64px;
+    height: 64px;
+  }
+
+  .tier-hero-emoji {
+    font-size: 2rem;
+  }
+
+  .tier-reward-card {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .tier-reward-status {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tier-quiz-row {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .tier-quiz-desc {
+    display: none;
+  }
+
+  .tier-nav-btn {
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+}

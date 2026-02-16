@@ -100,6 +100,17 @@
   box-shadow: 0 0 20px rgba(200, 162, 255, 0.15);
 }
 
+.nav-pill-journey {
+  background: rgba(100, 255, 218, 0.06);
+  border: 1px solid rgba(100, 255, 218, 0.12);
+}
+
+.nav-pill-journey:hover {
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.15), rgba(137, 207, 240, 0.15));
+  border-color: rgba(100, 255, 218, 0.3);
+  box-shadow: 0 0 16px rgba(100, 255, 218, 0.12);
+}
+
 .nav-pill-ghost {
   opacity: 0.6;
 }

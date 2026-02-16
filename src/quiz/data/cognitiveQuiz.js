@@ -1,0 +1,76 @@
+export default {
+  id: 'cognitive',
+  title: 'Cognitive Style',
+  subtitle: 'How your brain works',
+  emoji: '🧬',
+  gradient: 'linear-gradient(135deg, #89CFF0, #A8A2FF, #E6BEFF)',
+  type: 'choice',
+  questions: [
+    { id: 1, text: 'When learning something new, you prefer to:', options: [
+      { text: 'See diagrams, charts, or watch a video', category: 'visual' },
+      { text: 'Hear someone explain it or listen to a podcast', category: 'auditory' },
+      { text: 'Read about it and take detailed notes', category: 'reading' },
+      { text: 'Try it hands-on and learn by doing', category: 'kinesthetic' },
+    ]},
+    { id: 2, text: 'When you need to remember a phone number, you:', options: [
+      { text: 'Visualize the numbers in your mind', category: 'visual' },
+      { text: 'Repeat it out loud to yourself', category: 'auditory' },
+      { text: 'Write it down immediately', category: 'reading' },
+      { text: 'Dial it and let your fingers remember', category: 'kinesthetic' },
+    ]},
+    { id: 3, text: 'When you\'re bored, you tend to:', options: [
+      { text: 'Doodle, scroll through images, or watch something', category: 'visual' },
+      { text: 'Put on music, a podcast, or call a friend', category: 'auditory' },
+      { text: 'Read an article, book, or write in a journal', category: 'reading' },
+      { text: 'Fidget, move around, or do something physical', category: 'kinesthetic' },
+    ]},
+    { id: 4, text: 'When giving directions, you naturally:', options: [
+      { text: 'Draw a map or picture in my head/on paper', category: 'visual' },
+      { text: 'Describe the route verbally with landmarks', category: 'auditory' },
+      { text: 'Write out step-by-step instructions', category: 'reading' },
+      { text: 'Walk them through it or gesture the route', category: 'kinesthetic' },
+    ]},
+    { id: 5, text: 'When you\'re explaining an idea, you:', options: [
+      { text: 'Use metaphors, analogies, and mental images', category: 'visual' },
+      { text: 'Talk it through and think out loud', category: 'auditory' },
+      { text: 'Structure your argument logically with clear points', category: 'reading' },
+      { text: 'Use gestures, examples, and demonstrations', category: 'kinesthetic' },
+    ]},
+    { id: 6, text: 'Your study/work space ideal is:', options: [
+      { text: 'Clean, organized, with visual inspiration on the walls', category: 'visual' },
+      { text: 'Background music or ambient sound — silence is distracting', category: 'auditory' },
+      { text: 'Surrounded by books, notes, and reference materials', category: 'reading' },
+      { text: 'A standing desk or active space where I can move', category: 'kinesthetic' },
+    ]},
+    { id: 7, text: 'When making a tough decision, you:', options: [
+      { text: 'Visualize each outcome and see which picture feels right', category: 'visual' },
+      { text: 'Talk it through with someone or think out loud', category: 'auditory' },
+      { text: 'Make a pros and cons list or write out my thoughts', category: 'reading' },
+      { text: 'Go with my gut — I trust my physical intuition', category: 'kinesthetic' },
+    ]},
+    { id: 8, text: 'You know you\'ve truly understood something when:', options: [
+      { text: 'I can picture it clearly in my mind', category: 'visual' },
+      { text: 'I can explain it to someone else in words', category: 'auditory' },
+      { text: 'I can write a clear summary of it', category: 'reading' },
+      { text: 'I can do it or demonstrate it myself', category: 'kinesthetic' },
+    ]},
+    { id: 9, text: 'When stressed, you find relief through:', options: [
+      { text: 'Looking at nature, art, or something beautiful', category: 'visual' },
+      { text: 'Listening to music or talking it through', category: 'auditory' },
+      { text: 'Writing in a journal or reading something calming', category: 'reading' },
+      { text: 'Exercise, cooking, or doing something with my hands', category: 'kinesthetic' },
+    ]},
+    { id: 10, text: 'Your memory works best when:', options: [
+      { text: 'I can see it — faces, colors, spatial layouts stick', category: 'visual' },
+      { text: 'I hear it — conversations and sounds replay clearly', category: 'auditory' },
+      { text: 'I read it — written words imprint on my memory', category: 'reading' },
+      { text: 'I experience it — muscle memory and feelings stick', category: 'kinesthetic' },
+    ]},
+  ],
+  results: {
+    visual: { name: 'Visual', emoji: '👁️', color: '#C8A2FF', gradient: 'linear-gradient(135deg, #C8A2FF, #E6BEFF)', description: 'You\'re a Visual thinker. Your brain processes information through images, spatial relationships, and visual patterns. You think in pictures, remember faces over names, and learn best when you can see it.', traits: ['Spatial awareness', 'Pattern recognition', 'Design-minded', 'Visual memory', 'Aesthetic sensitivity'] },
+    auditory: { name: 'Auditory', emoji: '🎵', color: '#89CFF0', gradient: 'linear-gradient(135deg, #89CFF0, #64FFDA)', description: 'You\'re an Auditory thinker. Your brain processes information through sound, rhythm, and verbal communication. You remember what people said, think by talking, and learn best through listening and discussion.', traits: ['Verbal intelligence', 'Musical ear', 'Strong listener', 'Conversational learner', 'Sound-sensitive'] },
+    reading: { name: 'Reading/Writing', emoji: '📝', color: '#FFD700', gradient: 'linear-gradient(135deg, #FFD700, #FFA500)', description: 'You\'re a Reading/Writing thinker. Your brain processes information through text, lists, and written language. You organize your thoughts by writing them down, love taking notes, and learn best through reading.', traits: ['Verbal processing', 'Note-taking', 'Organized thoughts', 'Word-oriented', 'Reflective writer'] },
+    kinesthetic: { name: 'Kinesthetic', emoji: '🤸', color: '#64FFDA', gradient: 'linear-gradient(135deg, #64FFDA, #98FF98)', description: 'You\'re a Kinesthetic thinker. Your brain processes information through movement, touch, and physical experience. You learn by doing, trust your gut, and understand the world through direct interaction.', traits: ['Hands-on learner', 'Body awareness', 'Physical intuition', 'Active processor', 'Experiential'] },
+  },
+};

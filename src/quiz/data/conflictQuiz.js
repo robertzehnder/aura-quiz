@@ -1,0 +1,35 @@
+import { LIKERT_AGREE } from './scales';
+
+export default {
+  id: 'conflict',
+  title: 'Conflict Style',
+  subtitle: 'How you handle the heat',
+  emoji: '⚔️',
+  gradient: 'linear-gradient(135deg, #FF9999, #FFB366, #FFD700)',
+  type: 'likert',
+  likertOptions: LIKERT_AGREE,
+  questions: [
+    { id: 1, text: 'When there\'s a disagreement, I push hard for my preferred outcome.', category: 'compete' },
+    { id: 2, text: 'I try to find a solution that fully satisfies everyone involved.', category: 'collaborate' },
+    { id: 3, text: 'I\'m willing to meet in the middle, even if no one gets everything they want.', category: 'compromise' },
+    { id: 4, text: 'I\'d rather avoid the argument entirely than risk making things worse.', category: 'avoid' },
+    { id: 5, text: 'I often let others have their way to preserve the relationship.', category: 'accommodate' },
+    { id: 6, text: 'Winning an argument gives me a sense of satisfaction.', category: 'compete' },
+    { id: 7, text: 'I enjoy brainstorming creative solutions that address everyone\'s needs.', category: 'collaborate' },
+    { id: 8, text: 'I believe that compromise is the most realistic way to resolve things.', category: 'compromise' },
+    { id: 9, text: 'I tend to withdraw or go silent when things get heated.', category: 'avoid' },
+    { id: 10, text: 'Other people\'s feelings matter more to me than being right.', category: 'accommodate' },
+    { id: 11, text: 'I don\'t back down when I know I\'m right, even if it creates tension.', category: 'compete' },
+    { id: 12, text: 'I ask lots of questions during conflicts to understand the other side.', category: 'collaborate' },
+    { id: 13, text: '"Let\'s split the difference" is a phrase I use often.', category: 'compromise' },
+    { id: 14, text: 'Confrontation makes me physically uncomfortable.', category: 'avoid' },
+    { id: 15, text: 'I\'d rather sacrifice my needs than cause someone else pain.', category: 'accommodate' },
+  ],
+  results: {
+    compete: { name: 'Competing', emoji: '⚔️', color: '#FF4444', gradient: 'linear-gradient(135deg, #FF4444, #FF6B8A)', description: 'You\'re a Competitor in conflict. You fight to win — not out of malice, but because you believe in your position. You\'re assertive, direct, and unafraid of confrontation. At your best, you\'re a powerful advocate. Your growth edge is learning when winning isn\'t worth the cost.', traits: ['Assertive', 'Determined', 'Direct', 'Strong-willed', 'Results-driven'] },
+    collaborate: { name: 'Collaborating', emoji: '🤝', color: '#64FFDA', gradient: 'linear-gradient(135deg, #64FFDA, #89CFF0)', description: 'You\'re a Collaborator in conflict. You seek win-win outcomes and genuinely believe every conflict has a creative solution. You ask questions, listen deeply, and work tirelessly until everyone walks away satisfied. You turn conflict into connection.', traits: ['Creative problem-solver', 'Empathetic', 'Patient', 'Inclusive', 'Relationship-oriented'] },
+    compromise: { name: 'Compromising', emoji: '⚖️', color: '#FFD700', gradient: 'linear-gradient(135deg, #FFD700, #FFA500)', description: 'You\'re a Compromiser in conflict. You believe the best solution is one where everyone gives a little. You\'re pragmatic, fair-minded, and skilled at finding the middle ground. You move things forward when others are stuck.', traits: ['Pragmatic', 'Fair', 'Flexible', 'Efficient', 'Diplomatic'] },
+    avoid: { name: 'Avoiding', emoji: '🕊️', color: '#89CFF0', gradient: 'linear-gradient(135deg, #89CFF0, #C8A2FF)', description: 'You\'re an Avoider in conflict. You\'d rather sidestep disagreements to keep the peace. Sometimes this serves you well — not every battle needs fighting. But sometimes important things go unsaid. Your growth edge is learning that healthy conflict can strengthen relationships.', traits: ['Peaceful', 'Non-confrontational', 'Calm presence', 'Tactful', 'Reflective'] },
+    accommodate: { name: 'Accommodating', emoji: '💗', color: '#FFB6C1', gradient: 'linear-gradient(135deg, #FFB6C1, #E6BEFF)', description: 'You\'re an Accommodator in conflict. You prioritize relationships over outcomes and will sacrifice your own needs to maintain harmony. Your generosity is beautiful. Your growth edge is learning that your needs matter too, and voicing them is an act of self-respect.', traits: ['Selfless', 'Generous', 'Relationship-first', 'Harmonious', 'Caring'] },
+  },
+};

@@ -1,0 +1,35 @@
+import { LIKERT_AGREE } from './scales';
+
+export default {
+  id: 'attachment',
+  title: 'Attachment Style',
+  subtitle: 'Your relationship blueprint',
+  emoji: '🔗',
+  gradient: 'linear-gradient(135deg, #C8A2FF, #A8A2FF, #89CFF0)',
+  type: 'likert',
+  likertOptions: LIKERT_AGREE,
+  questions: [
+    { id: 1, text: 'I find it easy to get close to others and trust them.', category: 'secure' },
+    { id: 2, text: 'I often worry that my partner doesn\'t really love me.', category: 'anxious' },
+    { id: 3, text: 'I prefer not to depend on romantic partners too much.', category: 'avoidant' },
+    { id: 4, text: 'I want to be close to people but I\'m afraid they\'ll hurt me.', category: 'fearful' },
+    { id: 5, text: 'I\'m comfortable sharing my feelings with my partner.', category: 'secure' },
+    { id: 6, text: 'When my partner doesn\'t text back quickly, I assume something is wrong.', category: 'anxious' },
+    { id: 7, text: 'I feel uncomfortable when someone gets too emotionally close.', category: 'avoidant' },
+    { id: 8, text: 'I swing between wanting closeness and pushing people away.', category: 'fearful' },
+    { id: 9, text: 'I feel confident that my partner will be there for me when I need them.', category: 'secure' },
+    { id: 10, text: 'I need constant reassurance that my relationship is okay.', category: 'anxious' },
+    { id: 11, text: 'I feel most like myself when I have plenty of alone time.', category: 'avoidant' },
+    { id: 12, text: 'I often feel unworthy of love, even when someone clearly loves me.', category: 'fearful' },
+    { id: 13, text: 'I\'m able to handle relationship conflict without spiraling.', category: 'secure' },
+    { id: 14, text: 'I tend to overthink my partner\'s tone and body language.', category: 'anxious' },
+    { id: 15, text: 'Opening up emotionally feels like a vulnerability I\'d rather avoid.', category: 'avoidant' },
+    { id: 16, text: 'I deeply crave connection but am terrified of rejection.', category: 'fearful' },
+  ],
+  results: {
+    secure: { name: 'Secure', emoji: '🛡️', color: '#64FFDA', gradient: 'linear-gradient(135deg, #64FFDA, #98FF98)', description: 'You have a Secure attachment style. You feel comfortable with intimacy and independence alike. You trust your partners, communicate openly, and can handle conflict without losing your sense of self. This is the gold standard — you create safety wherever you go.', traits: ['Trusting', 'Emotionally available', 'Good communicator', 'Comfortable with closeness', 'Resilient in conflict'] },
+    anxious: { name: 'Anxious-Preoccupied', emoji: '💗', color: '#FF69B4', gradient: 'linear-gradient(135deg, #FF69B4, #FFB6C1)', description: 'You have an Anxious-Preoccupied attachment style. You love deeply and intensely, but you also worry intensely. You crave closeness and reassurance, and your emotional radar is always scanning for signs of disconnection. Your superpower is your capacity for deep love — your growth edge is trusting that love back.', traits: ['Deeply loving', 'Hyper-attuned to emotions', 'Craves reassurance', 'Fear of abandonment', 'Intense connector'] },
+    avoidant: { name: 'Dismissive-Avoidant', emoji: '🏔️', color: '#89CFF0', gradient: 'linear-gradient(135deg, #89CFF0, #A8A2FF)', description: 'You have a Dismissive-Avoidant attachment style. You value your independence fiercely and can find emotional closeness overwhelming. You\'re self-reliant, composed, and capable — but sometimes at the cost of deeper connection. Your growth edge is learning that needing people isn\'t weakness.', traits: ['Independent', 'Self-reliant', 'Emotionally guarded', 'Values freedom', 'Calm under pressure'] },
+    fearful: { name: 'Fearful-Avoidant', emoji: '🌊', color: '#C8A2FF', gradient: 'linear-gradient(135deg, #C8A2FF, #E6BEFF)', description: 'You have a Fearful-Avoidant (Disorganized) attachment style. You deeply desire connection but are equally terrified of it. You swing between reaching out and pulling back, creating a push-pull dynamic. Your depth of feeling is extraordinary — healing this pattern unlocks profound relational capacity.', traits: ['Push-pull dynamic', 'Deeply feeling', 'Fear of vulnerability', 'Complex emotions', 'Transformative potential'] },
+  },
+};

@@ -1,7 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 
-const quizzes = [
+const features = [
+  {
+    id: 'journey',
+    title: 'The Journey',
+    subtitle: '25 quizzes · 5 tiers · unlock AI',
+    emoji: '🗺️',
+    description: 'Embark on an RPG-style quest through 25 personality quizzes. Level up, earn tokens, and unlock deep AI insights about yourself.',
+    gradient: 'linear-gradient(135deg, #64FFDA, #89CFF0, #C8A2FF, #FF6B8A)',
+    glowColor: 'rgba(100, 255, 218, 0.35)',
+    path: '/journey',
+    available: true,
+    featured: true,
+  },
   {
     id: 'aura',
     title: 'Aura Quiz',
@@ -14,26 +26,15 @@ const quizzes = [
     available: true,
   },
   {
-    id: 'big5',
-    title: 'Big 5',
-    subtitle: 'Map your personality traits',
-    emoji: '🧠',
-    description: 'Explore the five fundamental dimensions of your personality.',
-    gradient: 'linear-gradient(135deg, #89CFF0, #64FFDA, #98FF98)',
-    glowColor: 'rgba(100, 255, 218, 0.4)',
-    path: '/big5',
-    available: false,
-  },
-  {
-    id: 'career',
-    title: 'Career Path',
-    subtitle: 'Find your calling',
-    emoji: '🚀',
-    description: 'Discover career paths that align with your unique strengths.',
-    gradient: 'linear-gradient(135deg, #FFB366, #FF9999, #FFBCD9)',
-    glowColor: 'rgba(255, 179, 102, 0.4)',
-    path: '/career',
-    available: false,
+    id: 'fortune',
+    title: 'Zoltar',
+    subtitle: 'Ask the fortune teller',
+    emoji: '🎭',
+    description: 'Consult the mystical Zoltar for wisdom, guidance, and cosmic insights about your future.',
+    gradient: 'linear-gradient(135deg, #FFD700, #FF6B00, #C8A2FF)',
+    glowColor: 'rgba(255, 215, 0, 0.4)',
+    path: '/fortune',
+    available: true,
   },
 ];
 
@@ -56,23 +57,24 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Quiz Gallery */}
+      {/* Feature Gallery */}
       <section className="quiz-gallery">
-        {quizzes.map((quiz) => (
+        {features.map((item) => (
           <button
-            key={quiz.id}
-            className={`quiz-card glass ${!quiz.available ? 'quiz-card-locked' : ''}`}
-            onClick={() => quiz.available && navigate(quiz.path)}
-            style={{ '--card-gradient': quiz.gradient, '--card-glow': quiz.glowColor }}
+            key={item.id}
+            className={`quiz-card glass ${!item.available ? 'quiz-card-locked' : ''} ${item.featured ? 'quiz-card-featured' : ''}`}
+            onClick={() => item.available && navigate(item.path)}
+            style={{ '--card-gradient': item.gradient, '--card-glow': item.glowColor }}
           >
             <div className="card-shimmer" />
+            {item.featured && <div className="card-featured-badge">✨ new</div>}
             <div className="card-content">
-              <span className="card-emoji">{quiz.emoji}</span>
-              <h2 className="card-title">{quiz.title}</h2>
-              <p className="card-subtitle">{quiz.subtitle}</p>
-              <p className="card-description">{quiz.description}</p>
-              {quiz.available ? (
-                <span className="card-cta">begin journey →</span>
+              <span className="card-emoji">{item.emoji}</span>
+              <h2 className="card-title">{item.title}</h2>
+              <p className="card-subtitle">{item.subtitle}</p>
+              <p className="card-description">{item.description}</p>
+              {item.available ? (
+                <span className="card-cta">{item.featured ? 'start journey →' : 'begin →'}</span>
               ) : (
                 <span className="card-coming-soon">coming soon ✨</span>
               )}

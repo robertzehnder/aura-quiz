@@ -16,6 +16,9 @@ export default function Toolbar() {
     }
   };
 
+  const isHome = location.pathname === '/';
+  const isQuizzes = location.pathname === '/quizzes';
+
   return (
     <nav className="toolbar glass">
       <div className="toolbar-inner">
@@ -25,12 +28,21 @@ export default function Toolbar() {
         </button>
 
         <div className="toolbar-nav">
-          {location.pathname !== '/' && (
+          {!isHome && (
             <button
               className="nav-pill"
               onClick={() => navigate('/')}
             >
-              quizzes
+              🗺️ journey
+            </button>
+          )}
+
+          {!isQuizzes && (
+            <button
+              className="nav-pill nav-pill-journey"
+              onClick={() => navigate('/quizzes')}
+            >
+              📝 quizzes
             </button>
           )}
 

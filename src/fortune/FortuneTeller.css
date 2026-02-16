@@ -1,0 +1,1824 @@
+/* ═══════════════════════════════════════════════════
+   FORTUNE TELLER — Animated Guide Experience
+   ═══════════════════════════════════════════════════ */
+
+.fortune-page {
+  height: calc(100vh - var(--toolbar-height));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════
+   GUIDE SELECTOR — Toggle Between Characters
+   ═══════════════════════════════════════════════════ */
+
+.guide-selector {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px 0;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.guide-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.guide-tab:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(200, 162, 255, 0.2);
+  border-color: rgba(200, 162, 255, 0.3);
+}
+
+.guide-tab:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.guide-tab:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Zoltar tab active */
+.guide-tab.active {
+  border-color: rgba(200, 162, 255, 0.4);
+  box-shadow: 0 0 16px rgba(200, 162, 255, 0.2);
+}
+
+.guide-zoltar .guide-tab.active {
+  background: rgba(75, 0, 130, 0.3);
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.15);
+}
+
+.guide-yala .guide-tab.active {
+  background: rgba(100, 180, 140, 0.15);
+  border-color: rgba(137, 207, 240, 0.3);
+  box-shadow: 0 0 16px rgba(137, 207, 240, 0.15);
+}
+
+.guide-tab-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.guide-tab-name {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.guide-tab.active .guide-tab-name {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════
+   SCENE — The Booth & Character
+   ═══════════════════════════════════════════════════ */
+
+.guide-scene {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 8px 20px 0;
+  min-height: 0;
+}
+
+/* ── Booth Structure ──────────────────────────────── */
+
+.booth {
+  position: relative;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booth-top {
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(180deg, #3a1a0a, #5c2d0e, #3a1a0a);
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+  box-shadow:
+    0 -4px 20px rgba(255, 179, 102, 0.3),
+    inset 0 2px 4px rgba(255, 215, 0, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  transition: all 0.5s ease;
+}
+
+/* Yala booth tint */
+.guide-yala .booth-top {
+  background: linear-gradient(180deg, #1a2a3a, #2a3a4a, #1a2a3a);
+  box-shadow:
+    0 -4px 20px rgba(137, 207, 240, 0.2),
+    inset 0 2px 4px rgba(137, 207, 240, 0.1);
+  border-color: rgba(137, 207, 240, 0.2);
+}
+
+.booth-sign {
+  padding: 4px 20px;
+  position: relative;
+}
+
+.booth-sign-text {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  background: linear-gradient(180deg, #FFD700, #FF6B00, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+  text-transform: uppercase;
+  transition: filter 0.5s ease;
+}
+
+.guide-yala .booth-sign-text {
+  background: linear-gradient(180deg, #89CFF0, #FFB6C1, #C8A2FF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(137, 207, 240, 0.5));
+}
+
+.booth-body {
+  width: 100%;
+  height: 260px;
+  background: linear-gradient(180deg, #0d0221 0%, #1a0a3e 40%, #0d0221 100%);
+  border-left: 3px solid #5c2d0e;
+  border-right: 3px solid #5c2d0e;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 0.5s ease;
+}
+
+.guide-yala .booth-body {
+  background: linear-gradient(180deg, #0a0d21 0%, #0d1a3e 40%, #0a0d21 100%);
+  border-left-color: #2a3a4a;
+  border-right-color: #2a3a4a;
+}
+
+/* ── Curtains ──────────────────────────────────────── */
+
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  z-index: 2;
+  transition: background 0.5s ease;
+}
+
+.curtain-left {
+  left: 0;
+  background: linear-gradient(90deg,
+    rgba(88, 28, 135, 0.9) 0%,
+    rgba(88, 28, 135, 0.6) 40%,
+    transparent 100%
+  );
+}
+
+.curtain-right {
+  right: 0;
+  background: linear-gradient(-90deg,
+    rgba(88, 28, 135, 0.9) 0%,
+    rgba(88, 28, 135, 0.6) 40%,
+    transparent 100%
+  );
+}
+
+.guide-yala .curtain-left {
+  background: linear-gradient(90deg,
+    rgba(20, 40, 80, 0.9) 0%,
+    rgba(20, 40, 80, 0.6) 40%,
+    transparent 100%
+  );
+}
+
+.guide-yala .curtain-right {
+  background: linear-gradient(-90deg,
+    rgba(20, 40, 80, 0.9) 0%,
+    rgba(20, 40, 80, 0.6) 40%,
+    transparent 100%
+  );
+}
+
+.curtain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 15px,
+    rgba(255, 255, 255, 0.03) 15px,
+    rgba(255, 255, 255, 0.03) 16px
+  );
+}
+
+/* ── Booth Sparkles ───────────────────────────────── */
+
+.booth-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.booth-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: boothTwinkle 3s ease-in-out infinite;
+}
+
+.guide-yala .booth-star {
+  background: #89CFF0;
+}
+
+@keyframes boothTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%      { opacity: 0.7; transform: scale(1); }
+}
+
+/* ── Booth Bottom ─────────────────────────────────── */
+
+.booth-bottom {
+  width: 100%;
+  height: 28px;
+  background: linear-gradient(180deg, #5c2d0e, #3a1a0a);
+  border-radius: 0 0 12px 12px;
+  position: relative;
+  z-index: 3;
+  border: 2px solid rgba(255, 215, 0, 0.15);
+  border-top: 2px solid #7a3d15;
+  transition: all 0.5s ease;
+}
+
+.guide-yala .booth-bottom {
+  background: linear-gradient(180deg, #2a3a4a, #1a2a3a);
+  border-color: rgba(137, 207, 240, 0.15);
+  border-top-color: #3a4a5a;
+}
+
+.booth-trim {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+  transition: background 0.5s ease;
+}
+
+.guide-yala .booth-trim {
+  background: linear-gradient(90deg, transparent, rgba(137, 207, 240, 0.4), transparent);
+}
+
+/* ═══════════════════════════════════════════════════
+   ZOLTAR CHARACTER
+   ═══════════════════════════════════════════════════ */
+
+.fortune-teller {
+  position: absolute;
+  bottom: 70px;
+  width: 140px;
+  height: 170px;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.fortune-teller.idle {
+  animation: ftIdle 6s ease-in-out infinite;
+}
+
+.fortune-teller.speaking {
+  animation: ftSpeak 2s ease-in-out infinite;
+}
+
+@keyframes ftIdle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-3px) rotate(0.5deg); }
+  50%      { transform: translateY(-1px) rotate(-0.3deg); }
+  75%      { transform: translateY(-4px) rotate(0.2deg); }
+}
+
+@keyframes ftSpeak {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  15%      { transform: translateY(-4px) rotate(1deg) scale(1.02); }
+  30%      { transform: translateY(-2px) rotate(-0.5deg) scale(1); }
+  50%      { transform: translateY(-5px) rotate(0.8deg) scale(1.01); }
+  70%      { transform: translateY(-1px) rotate(-1deg) scale(1.02); }
+  85%      { transform: translateY(-3px) rotate(0.3deg) scale(1); }
+}
+
+/* Head */
+.ft-head {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 65px;
+  z-index: 2;
+}
+
+.fortune-teller.speaking .ft-head {
+  animation: headBob 1.5s ease-in-out infinite;
+}
+
+@keyframes headBob {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  30%      { transform: translateX(-50%) rotate(2deg) translateY(-2px); }
+  60%      { transform: translateX(-50%) rotate(-1.5deg) translateY(-1px); }
+}
+
+/* Face */
+.ft-face {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 48px;
+  background: linear-gradient(180deg, #D4956A, #C4854A);
+  border-radius: 22px 22px 18px 18px;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ft-eye {
+  position: absolute;
+  top: 16px;
+  width: 9px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.ft-eye-left { left: 9px; }
+.ft-eye-right { right: 9px; }
+
+.ft-pupil {
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background: #1a0a2e;
+  border-radius: 50%;
+  animation: lookAround 8s ease-in-out infinite;
+}
+
+.fortune-teller.speaking .ft-pupil {
+  animation: lookAtYou 3s ease-in-out infinite;
+}
+
+@keyframes lookAround {
+  0%, 100% { transform: translateX(-50%); }
+  20%      { transform: translateX(-20%); }
+  40%      { transform: translateX(-80%); }
+  60%      { transform: translateX(-30%); }
+  80%      { transform: translateX(-70%); }
+}
+
+@keyframes lookAtYou {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(1px); }
+}
+
+/* Eyebrows */
+.ft-eyebrow {
+  position: absolute;
+  top: 11px;
+  width: 12px;
+  height: 3px;
+  background: #2a1a0a;
+  border-radius: 2px;
+}
+.ft-eyebrow-left { left: 6px; transform: rotate(-5deg); }
+.ft-eyebrow-right { right: 6px; transform: rotate(5deg); }
+
+.fortune-teller.speaking .ft-eyebrow-left {
+  animation: browRaiseL 2s ease-in-out infinite;
+}
+.fortune-teller.speaking .ft-eyebrow-right {
+  animation: browRaiseR 2s ease-in-out infinite;
+}
+
+@keyframes browRaiseL {
+  0%, 100% { transform: rotate(-5deg) translateY(0); }
+  50%      { transform: rotate(-8deg) translateY(-2px); }
+}
+@keyframes browRaiseR {
+  0%, 100% { transform: rotate(5deg) translateY(0); }
+  50%      { transform: rotate(8deg) translateY(-2px); }
+}
+
+/* Nose */
+.ft-nose {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 7px;
+  background: #B8774A;
+  border-radius: 50% 50% 40% 40%;
+}
+
+/* Mustache */
+.ft-mustache {
+  position: absolute;
+  top: 31px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 8px;
+  background: #1a0a2e;
+  border-radius: 0 0 14px 14px;
+  clip-path: polygon(0 0, 50% 100%, 100% 0, 100% 40%, 50% 70%, 0 40%);
+}
+
+/* Beard */
+.ft-beard {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 14px;
+  background: #1a0a2e;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Mouth */
+.ft-mouth {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 4px;
+  background: #8B3A3A;
+  border-radius: 0 0 5px 5px;
+  transition: all 0.2s ease;
+}
+
+.fortune-teller.speaking .ft-mouth {
+  animation: mouthMove 0.4s ease-in-out infinite;
+}
+
+@keyframes mouthMove {
+  0%, 100% { height: 4px; width: 10px; border-radius: 0 0 5px 5px; }
+  25%      { height: 7px; width: 12px; border-radius: 50%; }
+  50%      { height: 3px; width: 8px; border-radius: 0 0 4px 4px; }
+  75%      { height: 6px; width: 11px; border-radius: 50%; }
+}
+
+/* Earrings */
+.ft-earring {
+  position: absolute;
+  bottom: 12px;
+  width: 5px;
+  height: 8px;
+  background: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
+}
+.ft-earring-left { left: -4px; }
+.ft-earring-right { right: -4px; }
+
+/* Turban */
+.ft-turban {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 30px;
+  background: linear-gradient(135deg, #FFD700, #DAA520, #FFD700);
+  border-radius: 26px 26px 10px 10px;
+  box-shadow:
+    0 0 10px rgba(255, 215, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.ft-turban-wrap {
+  position: absolute;
+  bottom: 4px;
+  left: 2px;
+  right: 2px;
+  height: 6px;
+  background: repeating-linear-gradient(90deg,
+    transparent 0px, transparent 4px,
+    rgba(139, 69, 19, 0.3) 4px, rgba(139, 69, 19, 0.3) 5px
+  );
+  border-radius: 3px;
+}
+
+.ft-turban-jewel {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #FF0040, #8B0000);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 0, 64, 0.6);
+  animation: jewelPulse 2s ease-in-out infinite;
+}
+
+@keyframes jewelPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 0, 64, 0.6); }
+  50%      { box-shadow: 0 0 16px rgba(255, 0, 64, 0.9), 0 0 24px rgba(255, 0, 64, 0.3); }
+}
+
+.ft-turban-feather {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(10deg);
+  width: 3px;
+  height: 14px;
+  background: linear-gradient(180deg, #FF69B4, #FFD700);
+  border-radius: 1.5px;
+  transform-origin: bottom center;
+  animation: featherSway 4s ease-in-out infinite;
+}
+
+@keyframes featherSway {
+  0%, 100% { transform: translateX(-50%) rotate(10deg); }
+  50%      { transform: translateX(-50%) rotate(-5deg); }
+}
+
+/* Body / Robes */
+.ft-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 110px;
+}
+
+.ft-robe {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 95px;
+  background: linear-gradient(180deg, #4B0082, #2E0054);
+  border-radius: 20px 20px 40px 40px;
+  box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ft-robe-inner {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 90px;
+  background: linear-gradient(180deg, #DAA520, #B8860B);
+  clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+  opacity: 0.8;
+}
+
+.ft-collar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 18px;
+  background: linear-gradient(180deg, #DAA520, #B8860B);
+  border-radius: 30px 30px 0 0;
+  box-shadow: 0 0 6px rgba(218, 165, 32, 0.3);
+}
+
+/* Arms */
+.ft-arm {
+  position: absolute;
+  bottom: 20px;
+  width: 25px;
+  height: 55px;
+  background: linear-gradient(180deg, #DAA520, #B8860B);
+  border-radius: 12px;
+}
+.ft-arm-left { left: 2px; transform: rotate(15deg); transform-origin: top center; }
+.ft-arm-right { right: 2px; transform: rotate(-15deg); transform-origin: top center; }
+
+.fortune-teller.speaking .ft-arm-left { animation: armGestureL 3s ease-in-out infinite; }
+.fortune-teller.speaking .ft-arm-right { animation: armGestureR 3s ease-in-out infinite; }
+
+@keyframes armGestureL {
+  0%, 100% { transform: rotate(15deg); }
+  50%      { transform: rotate(8deg) translateY(-4px); }
+}
+@keyframes armGestureR {
+  0%, 100% { transform: rotate(-15deg); }
+  30%      { transform: rotate(-10deg) translateY(-6px); }
+  60%      { transform: rotate(-18deg) translateY(-2px); }
+}
+
+/* Hands */
+.ft-hand {
+  position: absolute;
+  bottom: 12px;
+  width: 16px;
+  height: 16px;
+  background: #C4854A;
+  border-radius: 50%;
+}
+.ft-hand-left { left: 6px; }
+.ft-hand-right { right: 6px; }
+
+.fortune-teller.speaking .ft-hand-left { animation: handWaveL 2s ease-in-out infinite; }
+.fortune-teller.speaking .ft-hand-right { animation: handWaveR 2.5s ease-in-out infinite; }
+
+@keyframes handWaveL {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px) rotate(-5deg); }
+}
+@keyframes handWaveR {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-10px) rotate(5deg); }
+}
+
+/* Necklace */
+.ft-necklace {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  z-index: 3;
+}
+
+.ft-bead {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation: beadShimmer 3s ease-in-out infinite;
+}
+.ft-bead:nth-child(1) { background: #FF6B8A; animation-delay: 0s; }
+.ft-bead:nth-child(2) { background: #FFD700; animation-delay: 0.3s; }
+.ft-bead:nth-child(3) { background: #C8A2FF; animation-delay: 0.6s; }
+.ft-bead:nth-child(4) { background: #89CFF0; animation-delay: 0.9s; }
+.ft-bead:nth-child(5) { background: #FF6B8A; animation-delay: 1.2s; }
+
+@keyframes beadShimmer {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.3); box-shadow: 0 0 6px currentColor; }
+}
+
+/* ═══════════════════════════════════════════════════
+   YALA CAT CHARACTER
+   ═══════════════════════════════════════════════════ */
+
+.yala-cat {
+  position: absolute;
+  bottom: 60px;
+  width: 130px;
+  height: 170px;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.yala-cat.idle {
+  animation: yalaIdle 5s ease-in-out infinite;
+}
+
+.yala-cat.speaking {
+  animation: yalaSpeak 2s ease-in-out infinite;
+}
+
+@keyframes yalaIdle {
+  0%, 100% { transform: translateY(0); }
+  30%      { transform: translateY(-3px); }
+  60%      { transform: translateY(-1px); }
+}
+
+@keyframes yalaSpeak {
+  0%, 100% { transform: translateY(0) scale(1); }
+  20%      { transform: translateY(-4px) scale(1.02); }
+  50%      { transform: translateY(-2px) scale(1); }
+  75%      { transform: translateY(-5px) scale(1.01); }
+}
+
+/* ── Yala Head ────────────────────────────────────── */
+
+.yala-head {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 68px;
+  z-index: 3;
+}
+
+.yala-cat.speaking .yala-head {
+  animation: yalaHeadBob 1.8s ease-in-out infinite;
+}
+
+@keyframes yalaHeadBob {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  25%      { transform: translateX(-50%) rotate(3deg) translateY(-2px); }
+  50%      { transform: translateX(-50%) rotate(-2deg); }
+  75%      { transform: translateX(-50%) rotate(1deg) translateY(-1px); }
+}
+
+/* ── Ears ──────────────────────────────────────────── */
+
+.yala-ear {
+  position: absolute;
+  top: 2px;
+  width: 22px;
+  height: 28px;
+  background: linear-gradient(170deg, #9E9E9E, #858585);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  z-index: 1;
+}
+
+.yala-ear-left {
+  left: 5px;
+  transform: rotate(-10deg);
+}
+
+.yala-ear-right {
+  right: 5px;
+  transform: rotate(10deg);
+}
+
+.yala-ear-inner {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 16px;
+  background: linear-gradient(170deg, #FFB6C1, #FF91A4);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* ── Face ──────────────────────────────────────────── */
+
+.yala-face {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 54px;
+  background:
+    /* subtle tabby markings on grey */
+    repeating-linear-gradient(
+      170deg,
+      transparent 0px, transparent 4px,
+      rgba(130, 130, 130, 0.25) 4px, rgba(130, 130, 130, 0.25) 5px
+    ),
+    linear-gradient(180deg, #8E8E8E, #9A9A9A, #9E9E9E);  /* grey fur base */
+  /* More angular / wedge-shaped: wider cheeks, narrower chin */
+  border-radius: 26px 26px 18px 18px;
+  overflow: hidden;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* White blaze — wide inverted-triangle from forehead through centre,
+   widening into the muzzle and extending past chin to merge into chest */
+.yala-face-grey {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 100%;
+  background: linear-gradient(180deg, #F0F0F0 0%, white 30%, white 100%);
+  /* Narrow at top (between ears), widens as it goes down */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 45%, 100% 100%, 0% 100%, 0% 45%);
+  z-index: 1;
+}
+
+/* Wide white muzzle / lower-face — extends below chin to connect into body bib */
+.yala-muzzle {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46px;
+  height: 30px;
+  background: white;
+  border-radius: 20px 20px 14px 14px;
+  z-index: 1;
+}
+
+/* ── Eyes ──────────────────────────────────────────── */
+
+.yala-eye {
+  position: absolute;
+  top: 22px;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  border: 1.5px solid #555;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.yala-eye-left { left: 10px; }
+.yala-eye-right { right: 10px; }
+
+.yala-iris {
+  position: absolute;
+  inset: 1px;
+  background: radial-gradient(circle at 40% 40%,
+    #7CB342, #558B2F, #33691E
+  );
+  border-radius: 50%;
+  animation: yalaLook 7s ease-in-out infinite;
+}
+
+.yala-cat.speaking .yala-iris {
+  animation: yalaLookAtYou 3s ease-in-out infinite;
+}
+
+.yala-pupil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 9px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Cat pupils dilate when speaking (excited) */
+.yala-cat.speaking .yala-pupil {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.yala-eye-shine {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@keyframes yalaLook {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-2px) translateY(1px); }
+  35%      { transform: translateX(2px); }
+  55%      { transform: translateX(-1px) translateY(-1px); }
+  75%      { transform: translateX(1px) translateY(1px); }
+}
+
+@keyframes yalaLookAtYou {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50%      { transform: translateX(0) translateY(1px); }
+}
+
+/* ── Nose ──────────────────────────────────────────── */
+
+.yala-nose {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 6px;
+  background: #FFB0C1;
+  border-radius: 50% 50% 40% 40%;
+  z-index: 2;
+  box-shadow: 0 0 3px rgba(255, 150, 180, 0.4);
+}
+
+/* ── Mouth ─────────────────────────────────────────── */
+
+.yala-mouth {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 8px;
+  z-index: 2;
+}
+
+.yala-mouth-line {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 6px;
+  border-bottom: 2px solid #999;
+  border-radius: 0 0 50% 50%;
+}
+
+.yala-mouth-left {
+  left: 0;
+  border-bottom-left-radius: 0;
+}
+
+.yala-mouth-right {
+  right: 0;
+  border-bottom-right-radius: 0;
+}
+
+.yala-cat.speaking .yala-mouth-line {
+  animation: yalaMeow 0.5s ease-in-out infinite;
+}
+
+@keyframes yalaMeow {
+  0%, 100% { transform: scaleY(1); }
+  30%      { transform: scaleY(1.8) translateY(1px); }
+  60%      { transform: scaleY(0.6); }
+}
+
+/* ── Whiskers ─────────────────────────────────────── */
+
+.yala-whiskers {
+  position: absolute;
+  top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 3;
+}
+
+/* Left whiskers extend LEFT from the face edge */
+.yala-whiskers-left {
+  left: -20px;
+}
+
+/* Right whiskers extend RIGHT from the face edge */
+.yala-whiskers-right {
+  right: -20px;
+}
+
+.yala-whisker {
+  width: 24px;
+  height: 1.5px;
+  background: rgba(200, 200, 200, 0.8);
+  border-radius: 1px;
+}
+
+/* Left whiskers: pivot from RIGHT edge (face side), fan outward to the left */
+.yala-whiskers-left .yala-whisker {
+  transform-origin: right center;
+}
+
+.yala-whiskers-left .yala-whisker:nth-child(1) { transform: rotate(10deg); }
+.yala-whiskers-left .yala-whisker:nth-child(2) { transform: rotate(0deg); }
+.yala-whiskers-left .yala-whisker:nth-child(3) { transform: rotate(-10deg); }
+
+/* Right whiskers: pivot from LEFT edge (face side), fan outward to the right */
+.yala-whiskers-right .yala-whisker {
+  transform-origin: left center;
+}
+
+.yala-whiskers-right .yala-whisker:nth-child(1) { transform: rotate(-10deg); }
+.yala-whiskers-right .yala-whisker:nth-child(2) { transform: rotate(0deg); }
+.yala-whiskers-right .yala-whisker:nth-child(3) { transform: rotate(10deg); }
+
+.yala-cat.speaking .yala-whiskers-left .yala-whisker {
+  animation: whiskerTwitchLeft 0.8s ease-in-out infinite;
+}
+
+.yala-cat.speaking .yala-whiskers-right .yala-whisker {
+  animation: whiskerTwitchRight 0.8s ease-in-out infinite;
+}
+
+@keyframes whiskerTwitchLeft {
+  0%, 100% { transform: rotate(var(--base-rot, 0deg)); }
+  50%      { transform: rotate(calc(var(--base-rot, 0deg) - 4deg)) translateX(-2px); }
+}
+
+@keyframes whiskerTwitchRight {
+  0%, 100% { transform: rotate(var(--base-rot, 0deg)); }
+  50%      { transform: rotate(calc(var(--base-rot, 0deg) + 4deg)) translateX(2px); }
+}
+
+/* ── Yala Body ────────────────────────────────────── */
+
+.yala-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 100px;
+  z-index: 1;
+}
+
+/* Grey fur — wraps around back and sides, with subtle tabby stripes */
+.yala-fur-grey {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 74px;
+  height: 95px;
+  background:
+    repeating-linear-gradient(
+      175deg,
+      transparent 0px, transparent 6px,
+      rgba(120, 120, 120, 0.2) 6px, rgba(120, 120, 120, 0.2) 7.5px
+    ),
+    linear-gradient(180deg, #9E9E9E 0%, #8A8A8A 60%, #9E9E9E 100%);
+  border-radius: 37px 37px 28px 28px;
+  box-shadow: inset 0 -8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* White chest bib — starts high at throat to merge with face, widens into belly */
+.yala-fur-white {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46px;
+  height: 90px;
+  background: linear-gradient(180deg, rgba(248,248,248,0.97) 0%, white 20%, white 100%);
+  border-radius: 16px 16px 18px 18px;
+  /* Narrow at throat, widens into belly, matches face muzzle width at top */
+  clip-path: polygon(28% 0%, 72% 0%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
+  z-index: 1;
+}
+
+/* ── Paws ──────────────────────────────────────────── */
+
+.yala-paw {
+  position: absolute;
+  bottom: -2px;
+  width: 18px;
+  height: 14px;
+  background: white;
+  border-radius: 50% 50% 40% 40%;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.yala-paw-left { left: 10px; }
+.yala-paw-right { right: 10px; }
+
+.yala-paw::before,
+.yala-paw::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  width: 3px;
+  height: 3px;
+  background: #FFB0C1;
+  border-radius: 50%;
+}
+
+.yala-paw::before { left: 4px; }
+.yala-paw::after { right: 4px; }
+
+.yala-cat.speaking .yala-paw-left {
+  animation: pawKnead 1.5s ease-in-out infinite;
+}
+
+.yala-cat.speaking .yala-paw-right {
+  animation: pawKnead 1.5s ease-in-out infinite 0.3s;
+}
+
+@keyframes pawKnead {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* ── Tail ──────────────────────────────────────────── */
+
+.yala-tail {
+  position: absolute;
+  top: 8px;
+  left: -2px;
+  width: 12px;
+  height: 58px;
+  background: linear-gradient(0deg, #8A8A8A 0%, #9E9E9E 50%, #8A8A8A 100%);
+  border-radius: 50% 6px 6px 6px;
+  transform-origin: bottom right;
+  transform: rotate(-20deg);
+  animation: tailSway 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+.yala-cat.speaking .yala-tail {
+  animation: tailSwayExcited 1.2s ease-in-out infinite;
+}
+
+.yala-tail-stripe {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: rgba(110, 110, 110, 0.5);
+  border-radius: 3px;
+}
+
+.yala-tail-stripe:nth-child(1) { top: 8px; }
+.yala-tail-stripe:nth-child(2) { top: 19px; }
+.yala-tail-stripe:nth-child(3) { top: 30px; }
+
+@keyframes tailSway {
+  0%, 100% { transform: rotate(-20deg); }
+  50%      { transform: rotate(-35deg); }
+}
+
+@keyframes tailSwayExcited {
+  0%, 100% { transform: rotate(-15deg); }
+  25%      { transform: rotate(-40deg); }
+  50%      { transform: rotate(-10deg); }
+  75%      { transform: rotate(-45deg); }
+}
+
+/* (collar removed — Yala is a natural boy) */
+
+/* ═══════════════════════════════════════════════════
+   CRYSTAL BALL (shared, themed per guide)
+   ═══════════════════════════════════════════════════ */
+
+.crystal-ball {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  z-index: 3;
+}
+
+.crystal-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(200, 162, 255, 0.4), transparent 70%);
+  border-radius: 50%;
+  animation: crystalPulse 4s ease-in-out infinite;
+}
+
+.guide-yala .crystal-glow {
+  background: radial-gradient(circle, rgba(137, 207, 240, 0.4), transparent 70%);
+}
+
+.crystal-ball.active .crystal-glow {
+  animation: crystalPulseActive 1.5s ease-in-out infinite;
+}
+
+@keyframes crystalPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(1.15); }
+}
+
+@keyframes crystalPulseActive {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.3); }
+}
+
+.crystal-sphere {
+  position: absolute;
+  inset: 5px;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 255, 255, 0.6),
+    rgba(200, 162, 255, 0.5) 30%,
+    rgba(137, 207, 240, 0.4) 50%,
+    rgba(100, 255, 218, 0.3) 70%,
+    rgba(200, 162, 255, 0.2)
+  );
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 15px rgba(200, 162, 255, 0.4),
+    0 0 20px rgba(200, 162, 255, 0.3);
+}
+
+.guide-yala .crystal-sphere {
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 255, 255, 0.6),
+    rgba(137, 207, 240, 0.5) 30%,
+    rgba(255, 182, 193, 0.4) 50%,
+    rgba(200, 162, 255, 0.3) 70%,
+    rgba(137, 207, 240, 0.2)
+  );
+  box-shadow:
+    inset 0 0 15px rgba(137, 207, 240, 0.4),
+    0 0 20px rgba(137, 207, 240, 0.3);
+}
+
+.crystal-ball.active .crystal-sphere {
+  box-shadow:
+    inset 0 0 20px rgba(200, 162, 255, 0.6),
+    0 0 30px rgba(200, 162, 255, 0.5),
+    0 0 50px rgba(200, 162, 255, 0.2);
+}
+
+.crystal-highlight {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 12px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.crystal-mist {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 60% 60%, rgba(255, 182, 193, 0.3), transparent 60%),
+    radial-gradient(circle at 30% 40%, rgba(137, 207, 240, 0.3), transparent 60%);
+  animation: mistSwirl 6s linear infinite;
+}
+
+.crystal-ball.active .crystal-mist {
+  animation: mistSwirlActive 3s linear infinite;
+}
+
+@keyframes mistSwirl {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes mistSwirlActive {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.crystal-base {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 10px;
+  background: linear-gradient(180deg, #5c2d0e, #3a1a0a);
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background 0.5s ease;
+}
+
+.guide-yala .crystal-base {
+  background: linear-gradient(180deg, #3a4a5a, #2a3a4a);
+}
+
+/* ═══════════════════════════════════════════════════
+   SPEECH BUBBLE
+   ═══════════════════════════════════════════════════ */
+
+.speech-bubble {
+  position: relative;
+  max-width: 320px;
+  padding: 12px 18px;
+  background: rgba(75, 0, 130, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 162, 255, 0.2);
+  border-radius: 16px;
+  margin-top: 12px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s var(--ease-smooth);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.guide-yala .speech-bubble {
+  background: rgba(20, 40, 80, 0.3);
+  border-color: rgba(137, 207, 240, 0.2);
+}
+
+.speech-bubble.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(200, 162, 255, 0.2);
+}
+
+.guide-yala .speech-bubble::before {
+  border-bottom-color: rgba(137, 207, 240, 0.2);
+}
+
+.speech-text {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.speech-cursor {
+  display: inline-block;
+  animation: blink 0.7s step-end infinite;
+  color: var(--lilac);
+  font-style: normal;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════
+   VOICE TOGGLE
+   ═══════════════════════════════════════════════════ */
+
+.voice-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  margin-top: 8px;
+  background: rgba(75, 0, 130, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 162, 255, 0.2);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.voice-toggle:hover {
+  background: rgba(75, 0, 130, 0.4);
+  border-color: rgba(200, 162, 255, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 0 16px rgba(200, 162, 255, 0.2);
+}
+
+.voice-toggle:active {
+  transform: scale(0.96);
+}
+
+.voice-toggle.voice-on {
+  border-color: rgba(100, 255, 218, 0.3);
+  box-shadow: 0 0 12px rgba(100, 255, 218, 0.15);
+  animation: voicePulse 3s ease-in-out infinite;
+}
+
+.voice-toggle.voice-off {
+  opacity: 0.6;
+}
+
+.voice-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.voice-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+}
+
+.voice-toggle.voice-on .voice-label {
+  color: rgba(100, 255, 218, 0.9);
+}
+
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(100, 255, 218, 0.15); }
+  50%      { box-shadow: 0 0 20px rgba(100, 255, 218, 0.3), 0 0 30px rgba(200, 162, 255, 0.15); }
+}
+
+/* ═══════════════════════════════════════════════════
+   CHAT AREA
+   ═══════════════════════════════════════════════════ */
+
+.fortune-chat {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px 20px;
+  display: flex;
+  flex-direction: column;
+  max-height: 40vh;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 60px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-welcome {
+  text-align: center;
+  padding: 16px;
+  opacity: 0.6;
+}
+
+.chat-welcome-emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.chat-welcome p {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Message bubbles */
+.chat-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  animation: msgFadeIn 0.3s var(--ease-smooth);
+}
+
+.chat-msg-user {
+  flex-direction: row-reverse;
+}
+
+.chat-msg-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.chat-msg-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+.chat-msg-fortune .chat-msg-bubble {
+  border-bottom-left-radius: 4px;
+  background: rgba(75, 0, 130, 0.25);
+  border-color: rgba(200, 162, 255, 0.15);
+}
+
+.guide-yala .chat-msg-fortune .chat-msg-bubble {
+  background: rgba(20, 40, 80, 0.25);
+  border-color: rgba(137, 207, 240, 0.15);
+}
+
+.chat-msg-user .chat-msg-bubble {
+  border-bottom-right-radius: 4px;
+  background: rgba(255, 182, 193, 0.15);
+  border-color: rgba(255, 182, 193, 0.2);
+}
+
+.chat-msg-bubble p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.chat-msg-fortune .chat-msg-bubble p {
+  font-style: italic;
+}
+
+.typing-cursor {
+  display: inline-block;
+  animation: blink 0.7s step-end infinite;
+  color: var(--lilac);
+  font-style: normal;
+  font-weight: 700;
+}
+
+@keyframes msgFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Chat Input ───────────────────────────────────── */
+
+.chat-input-form {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border-radius: 20px;
+  outline: none;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.chat-input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.chat-input:focus {
+  border-color: rgba(200, 162, 255, 0.4);
+  box-shadow: 0 0 20px rgba(200, 162, 255, 0.15);
+}
+
+.guide-yala .chat-input:focus {
+  border-color: rgba(137, 207, 240, 0.4);
+  box-shadow: 0 0 20px rgba(137, 207, 240, 0.15);
+}
+
+.chat-input:disabled {
+  opacity: 0.5;
+}
+
+.chat-send-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(75, 0, 130, 0.5), rgba(200, 162, 255, 0.3));
+  border: 1px solid rgba(200, 162, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.guide-yala .chat-send-btn {
+  background: linear-gradient(135deg, rgba(20, 40, 80, 0.5), rgba(137, 207, 240, 0.3));
+  border-color: rgba(137, 207, 240, 0.3);
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(200, 162, 255, 0.3);
+  border-color: rgba(200, 162, 255, 0.5);
+}
+
+.chat-send-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .fortune-page {
+    height: 100dvh;
+    padding-top: 0;
+  }
+
+  .guide-selector {
+    padding: 8px 12px 0;
+    gap: 6px;
+  }
+
+  .guide-tab {
+    padding: 6px 14px;
+  }
+
+  .guide-tab-name {
+    font-size: 0.7rem;
+  }
+
+  .guide-scene {
+    padding: 4px 16px 0;
+  }
+
+  .booth {
+    width: 240px;
+  }
+
+  .booth-body {
+    height: 220px;
+  }
+
+  .booth-sign-text {
+    font-size: 1.3rem;
+  }
+
+  .fortune-teller {
+    width: 120px;
+    height: 150px;
+    bottom: 60px;
+  }
+
+  .yala-cat {
+    width: 110px;
+    height: 145px;
+    bottom: 50px;
+  }
+
+  .crystal-ball {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+  }
+
+  .speech-bubble {
+    max-width: 260px;
+    padding: 10px 14px;
+  }
+
+  .voice-toggle {
+    padding: 6px 12px;
+    margin-top: 6px;
+  }
+
+  .voice-icon {
+    font-size: 0.85rem;
+  }
+
+  .voice-label {
+    font-size: 0.65rem;
+  }
+
+  .fortune-chat {
+    max-height: 35vh;
+    padding: 0 12px 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .booth {
+    width: 340px;
+  }
+
+  .booth-body {
+    height: 320px;
+  }
+
+  .booth-top {
+    height: 52px;
+  }
+
+  .booth-sign-text {
+    font-size: 2rem;
+  }
+
+  .fortune-teller {
+    width: 160px;
+    height: 190px;
+    bottom: 80px;
+  }
+
+  .yala-cat {
+    width: 150px;
+    height: 195px;
+    bottom: 70px;
+  }
+
+  .yala-head {
+    top: 5px;
+    width: 84px;
+    height: 82px;
+  }
+
+  .yala-face {
+    width: 72px;
+    height: 62px;
+  }
+
+  .yala-face-grey {
+    width: 30px;
+  }
+
+  .yala-muzzle {
+    width: 52px;
+    height: 34px;
+  }
+
+  .yala-eye {
+    width: 16px;
+    height: 16px;
+    top: 22px;
+  }
+
+  .yala-eye-left { left: 12px; }
+  .yala-eye-right { right: 12px; }
+
+  .yala-nose { top: 36px; }
+  .yala-mouth { top: 41px; }
+  .yala-whiskers { top: 39px; }
+  .yala-whiskers-left { left: -24px; }
+  .yala-whiskers-right { right: -24px; }
+  .yala-whisker { width: 28px; }
+
+  .yala-ear {
+    width: 26px;
+    height: 34px;
+  }
+
+  .yala-body {
+    width: 92px;
+    height: 115px;
+  }
+
+  .yala-fur-grey {
+    width: 84px;
+    height: 110px;
+  }
+
+  .yala-fur-white {
+    width: 52px;
+    height: 105px;
+  }
+
+  .yala-tail {
+    top: 10px;
+    left: -2px;
+    height: 65px;
+    width: 14px;
+  }
+
+  .crystal-ball {
+    width: 70px;
+    height: 70px;
+    bottom: 28px;
+  }
+
+  .speech-bubble {
+    max-width: 400px;
+  }
+
+  .fortune-chat {
+    max-height: 35vh;
+  }
+}

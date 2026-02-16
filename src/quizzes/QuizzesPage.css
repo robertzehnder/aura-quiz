@@ -1,0 +1,210 @@
+/* ═══════════════════════════════════════════════════
+   QUIZZES PAGE — Browse All Quizzes
+   ═══════════════════════════════════════════════════ */
+
+.quizzes-page {
+  min-height: calc(100vh - var(--toolbar-height));
+  padding: 0 20px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ── Hero ──────────────────────────────────────────── */
+
+.quizzes-hero {
+  text-align: center;
+  padding: 32px 20px 16px;
+}
+
+.quizzes-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.quizzes-subtitle {
+  color: var(--text-secondary);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 400;
+}
+
+/* ── Tier Sections ─────────────────────────────────── */
+
+.quizzes-tier-section {
+  width: 100%;
+  margin-top: 28px;
+}
+
+.quizzes-tier-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-left: 4px;
+}
+
+.quizzes-tier-emoji {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 6px var(--tier-glow));
+}
+
+.quizzes-tier-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: var(--tier-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quizzes-tier-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── Quiz Grid ─────────────────────────────────────── */
+
+.quizzes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+/* ── Quiz Card ─────────────────────────────────────── */
+
+.quizzes-card {
+  position: relative;
+  padding: 20px 18px;
+  text-align: left;
+  overflow: hidden;
+  transition: all 0.4s var(--ease-smooth);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.quizzes-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-gradient);
+  opacity: 0;
+  transition: opacity 0.4s;
+  border-radius: inherit;
+}
+
+.quizzes-card:hover::before {
+  opacity: 0.08;
+}
+
+.quizzes-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.quizzes-card:active {
+  transform: translateY(-2px) scale(1);
+}
+
+.quizzes-card-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+}
+
+.quizzes-card:hover .quizzes-card-shimmer {
+  animation: qcShimmer 1.5s ease-in-out;
+}
+
+@keyframes qcShimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.quizzes-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quizzes-card-emoji {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+  transition: transform 0.4s var(--ease-bounce);
+}
+
+.quizzes-card:hover .quizzes-card-emoji {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.quizzes-card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--card-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quizzes-card-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.quizzes-card-meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.quizzes-card-cta {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.3s;
+  letter-spacing: 0.03em;
+}
+
+.quizzes-card:hover .quizzes-card-cta {
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+}
+
+/* ── Responsive ────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .quizzes-page {
+    padding: 0 12px 60px;
+  }
+
+  .quizzes-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .quizzes-card {
+    padding: 16px 14px;
+  }
+
+  .quizzes-tier-section {
+    margin-top: 20px;
+  }
+}

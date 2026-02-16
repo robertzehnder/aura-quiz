@@ -1,0 +1,35 @@
+import { LIKERT_ME } from './scales';
+
+export default {
+  id: 'strengths',
+  title: 'Strengths Finder',
+  subtitle: 'Your natural talents',
+  emoji: '💪',
+  gradient: 'linear-gradient(135deg, #FFB366, #FFD700, #98FF98)',
+  type: 'likert',
+  likertOptions: LIKERT_ME,
+  questions: [
+    { id: 1, text: 'I naturally take charge and organize people toward a goal.', category: 'leadership' },
+    { id: 2, text: 'I come up with creative solutions that others wouldn\'t think of.', category: 'innovation' },
+    { id: 3, text: 'I can break down complex problems into clear, logical steps.', category: 'analysis' },
+    { id: 4, text: 'I build deep, trusting relationships with almost anyone.', category: 'empathy' },
+    { id: 5, text: 'I stay calm and effective when everything around me is chaotic.', category: 'resilience' },
+    { id: 6, text: 'I motivate and inspire others to believe in themselves.', category: 'leadership' },
+    { id: 7, text: 'I see possibilities and opportunities that others miss.', category: 'innovation' },
+    { id: 8, text: 'I love diving deep into data, research, and finding patterns.', category: 'analysis' },
+    { id: 9, text: 'I intuitively know how someone is feeling without them telling me.', category: 'empathy' },
+    { id: 10, text: 'Setbacks motivate me rather than discourage me.', category: 'resilience' },
+    { id: 11, text: 'People naturally look to me for direction and decisions.', category: 'leadership' },
+    { id: 12, text: 'I get excited about new ideas and experimenting with different approaches.', category: 'innovation' },
+    { id: 13, text: 'I\'m the person people come to when they need something explained clearly.', category: 'analysis' },
+    { id: 14, text: 'I make people feel heard, valued, and understood.', category: 'empathy' },
+    { id: 15, text: 'I bounce back from failure faster than most people.', category: 'resilience' },
+  ],
+  results: {
+    leadership: { name: 'Leadership', emoji: '👑', color: '#FFD700', gradient: 'linear-gradient(135deg, #FFD700, #FFA500)', description: 'Your core strength is Leadership. You have a natural ability to inspire, organize, and guide others toward shared goals. People gravitate to your confidence and clarity of vision.', traits: ['Inspiring', 'Decisive', 'Visionary', 'Confident', 'Influential'] },
+    innovation: { name: 'Innovation', emoji: '💡', color: '#FF69B4', gradient: 'linear-gradient(135deg, #FF69B4, #E6BEFF)', description: 'Your core strength is Innovation. You think differently, see connections others miss, and thrive on creating new solutions. Your mind is a playground of possibilities.', traits: ['Creative', 'Original', 'Visionary', 'Experimental', 'Forward-thinking'] },
+    analysis: { name: 'Analysis', emoji: '🔬', color: '#89CFF0', gradient: 'linear-gradient(135deg, #89CFF0, #64FFDA)', description: 'Your core strength is Analysis. You cut through noise to find signal, break complex problems into understandable pieces, and make clarity out of chaos. Your mind is sharp as a scalpel.', traits: ['Logical', 'Precise', 'Detail-oriented', 'Systematic', 'Insightful'] },
+    empathy: { name: 'Empathy', emoji: '💗', color: '#FFB6C1', gradient: 'linear-gradient(135deg, #FFB6C1, #E6BEFF)', description: 'Your core strength is Empathy. You connect with people on a deep, intuitive level. Your ability to understand and share others\' feelings makes you an extraordinary friend, leader, and human.', traits: ['Intuitive', 'Compassionate', 'Connecting', 'Understanding', 'Emotionally intelligent'] },
+    resilience: { name: 'Resilience', emoji: '🔥', color: '#64FFDA', gradient: 'linear-gradient(135deg, #64FFDA, #98FF98)', description: 'Your core strength is Resilience. You don\'t just survive adversity — you thrive on it. Where others crumble, you find your footing and push forward. Your ability to bounce back is nothing short of superhuman.', traits: ['Tenacious', 'Adaptable', 'Persistent', 'Growth-oriented', 'Unbreakable'] },
+  },
+};

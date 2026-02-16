@@ -4,13 +4,13 @@
 
 .landing {
   min-height: calc(100vh - var(--toolbar-height));
-  max-height: calc(100vh - var(--toolbar-height));
   padding: 20px 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* ── Hero Section ───────────────────────────────── */
@@ -176,6 +176,62 @@
   font-style: italic;
 }
 
+/* ── Featured Card (The Journey) ────────────────── */
+
+.quiz-card-featured {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+.quiz-card-featured::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--card-gradient);
+  opacity: 0.12;
+  z-index: 0;
+  animation: featuredPulse 4s ease-in-out infinite;
+}
+
+@keyframes featuredPulse {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.16; }
+}
+
+.quiz-card-featured .card-emoji {
+  font-size: 3rem;
+}
+
+.quiz-card-featured .card-title {
+  font-size: 2.2rem;
+}
+
+.card-featured-badge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #64FFDA, #89CFF0);
+  color: #0d0221;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(100, 255, 218, 0.3);
+  animation: badgeShine 3s ease-in-out infinite;
+}
+
+@keyframes badgeShine {
+  0%, 100% { box-shadow: 0 0 16px rgba(100, 255, 218, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(100, 255, 218, 0.5), 0 0 40px rgba(100, 255, 218, 0.15); }
+}
+
 /* ── Locked Cards ───────────────────────────────── */
 
 .quiz-card-locked {
@@ -204,8 +260,6 @@
 @media (max-width: 768px) {
   .landing {
     justify-content: flex-start;
-    max-height: none;
-    overflow: auto;
   }
 
   .quiz-gallery {

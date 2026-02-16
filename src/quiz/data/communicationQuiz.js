@@ -1,0 +1,76 @@
+export default {
+  id: 'communication',
+  title: 'Communication Style',
+  subtitle: 'How your words land',
+  emoji: '💬',
+  gradient: 'linear-gradient(135deg, #89CFF0, #64FFDA, #98FF98)',
+  type: 'choice',
+  questions: [
+    { id: 1, text: 'In a meeting, you\'re most likely to:', options: [
+      { text: 'State my opinion directly, even if it\'s unpopular', category: 'assertive' },
+      { text: 'Present data and logical arguments to support my view', category: 'analytical' },
+      { text: 'Share a story or personal example to make my point', category: 'expressive' },
+      { text: 'Go along with the group to keep the peace', category: 'passive' },
+    ]},
+    { id: 2, text: 'When someone disagrees with you, you:', options: [
+      { text: 'Welcome the debate — I stand my ground respectfully', category: 'assertive' },
+      { text: 'Ask them to explain their reasoning so I can evaluate', category: 'analytical' },
+      { text: 'Get animated and passionate about convincing them', category: 'expressive' },
+      { text: 'Usually let it go — it\'s not worth the conflict', category: 'passive' },
+    ]},
+    { id: 3, text: 'Your text messages are usually:', options: [
+      { text: 'Short and direct — I get to the point', category: 'assertive' },
+      { text: 'Detailed and well-structured', category: 'analytical' },
+      { text: 'Full of emojis, voice notes, and energy', category: 'expressive' },
+      { text: 'Polite and accommodating — lots of "no worries!"', category: 'passive' },
+    ]},
+    { id: 4, text: 'When giving feedback, you tend to:', options: [
+      { text: 'Be honest and straightforward — sugarcoating wastes time', category: 'assertive' },
+      { text: 'Provide specific examples and actionable suggestions', category: 'analytical' },
+      { text: 'Lead with positives and use encouraging language', category: 'expressive' },
+      { text: 'Avoid it if possible, or say it very gently', category: 'passive' },
+    ]},
+    { id: 5, text: 'Your presentation style is:', options: [
+      { text: 'Confident and commanding — I own the room', category: 'assertive' },
+      { text: 'Organized with charts, data, and clear structure', category: 'analytical' },
+      { text: 'Engaging and animated — I tell stories and use humor', category: 'expressive' },
+      { text: 'Understated — I prefer to let the work speak for itself', category: 'passive' },
+    ]},
+    { id: 6, text: 'In a heated argument, you:', options: [
+      { text: 'Stay firm but fair — I don\'t back down or escalate', category: 'assertive' },
+      { text: 'Try to remove emotion and focus on facts', category: 'analytical' },
+      { text: 'Get emotional and express exactly how I feel', category: 'expressive' },
+      { text: 'Shut down or agree just to end the conflict', category: 'passive' },
+    ]},
+    { id: 7, text: 'People describe your communication as:', options: [
+      { text: 'Clear, direct, and confident', category: 'assertive' },
+      { text: 'Thorough, precise, and logical', category: 'analytical' },
+      { text: 'Warm, engaging, and enthusiastic', category: 'expressive' },
+      { text: 'Gentle, agreeable, and easy-going', category: 'passive' },
+    ]},
+    { id: 8, text: 'When making plans with friends, you:', options: [
+      { text: 'Take the lead — "Here\'s what we\'re doing"', category: 'assertive' },
+      { text: 'Research options and present the best choices', category: 'analytical' },
+      { text: 'Get everyone hyped and brainstorm together', category: 'expressive' },
+      { text: '"I\'m good with whatever everyone else wants!"', category: 'passive' },
+    ]},
+    { id: 9, text: 'The thing that frustrates you most in conversations:', options: [
+      { text: 'When people beat around the bush or won\'t commit', category: 'assertive' },
+      { text: 'When arguments lack evidence or logic', category: 'analytical' },
+      { text: 'When people are cold, robotic, or disengaged', category: 'expressive' },
+      { text: 'When people are aggressive or confrontational', category: 'passive' },
+    ]},
+    { id: 10, text: 'Your email sign-off of choice:', options: [
+      { text: '"Best," or just my name — simple and professional', category: 'assertive' },
+      { text: '"Please let me know if you have any questions"', category: 'analytical' },
+      { text: '"Can\'t wait! 😊" or "So excited about this!!"', category: 'expressive' },
+      { text: '"No rush at all!" or "Whatever works for you!"', category: 'passive' },
+    ]},
+  ],
+  results: {
+    assertive: { name: 'Assertive', emoji: '🎯', color: '#FF6B8A', gradient: 'linear-gradient(135deg, #FF6B8A, #FFB6C1)', description: 'You have an Assertive communication style. You express your thoughts and needs directly, clearly, and confidently while respecting others. You\'re not afraid to take the lead in conversations and people trust your word because you mean what you say.', traits: ['Direct', 'Confident', 'Clear boundaries', 'Respectful', 'Decisive'] },
+    analytical: { name: 'Analytical', emoji: '🔍', color: '#89CFF0', gradient: 'linear-gradient(135deg, #89CFF0, #A8A2FF)', description: 'You have an Analytical communication style. You lead with facts, structure, and precision. Every word is intentional, every argument is backed by evidence. People come to you when they need clear, rational thinking and thorough analysis.', traits: ['Precise', 'Logical', 'Detail-oriented', 'Structured', 'Evidence-based'] },
+    expressive: { name: 'Expressive', emoji: '✨', color: '#FFD700', gradient: 'linear-gradient(135deg, #FFD700, #FF69B4)', description: 'You have an Expressive communication style. You communicate with energy, emotion, and enthusiasm. Stories, humor, and personal connection are your tools. You make even mundane topics feel exciting and you have a gift for making others feel included.', traits: ['Animated', 'Warm', 'Storyteller', 'Persuasive', 'Emotionally intelligent'] },
+    passive: { name: 'Accommodating', emoji: '🕊️', color: '#98FF98', gradient: 'linear-gradient(135deg, #98FF98, #64FFDA)', description: 'You have an Accommodating communication style. You prioritize harmony, comfort, and others\' feelings in conversations. Your gentle approach makes people feel safe and heard. Your growth edge is learning to voice your own needs with the same care you give others.', traits: ['Diplomatic', 'Gentle', 'Good listener', 'Harmonious', 'Empathetic'] },
+  },
+};
